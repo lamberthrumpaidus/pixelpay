@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelPay TopUp - Top Up Game Cepat &amp; Aman</title>
+  <meta name="description" content="Landing page PixelPay TopUp, layanan top-up game berbasis IT yang cepat, aman, dan cocok untuk gamer Indonesia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #07111f;
+      --panel: #0f1f35;
+      --card: #132743;
+      --primary: #38bdf8;
+      --secondary: #a78bfa;
+      --accent: #22c55e;
+      --text: #f8fafc;
+      --muted: #cbd5e1;
+      --soft: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.14);
+      --warning: #fbbf24;
+    }
+
+    /* ===== RESET & BASE ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    .container { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+
+    /* ===== ANIMATED BACKGROUND ===== */
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bg-orbs::before,
+    .bg-orbs::after,
+    .bg-orbs span {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0;
+      animation: orbFloat 12s ease-in-out infinite;
+    }
+    .bg-orbs::before {
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(56,189,248,.22), transparent 70%);
+      top: -120px; left: -120px;
+      animation-delay: 0s;
+      opacity: 1;
+      animation: orbFloat1 14s ease-in-out infinite;
+    }
+    .bg-orbs::after {
+      width: 480px; height: 480px;
+      background: radial-gradient(circle, rgba(167,139,250,.18), transparent 70%);
+      top: -80px; right: -120px;
+      opacity: 1;
+      animation: orbFloat2 16s ease-in-out infinite;
+    }
+    .bg-orbs span {
+      width: 360px; height: 360px;
+      background: radial-gradient(circle, rgba(34,197,94,.10), transparent 70%);
+      bottom: 30%; left: 50%;
+      transform: translateX(-50%);
+      opacity: 1;
+      animation: orbFloat3 18s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(40px, 60px) scale(1.08); }
+      66%      { transform: translate(-20px, 30px) scale(0.96); }
+    }
+    @keyframes orbFloat2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      40%      { transform: translate(-50px, 40px) scale(1.1); }
+      70%      { transform: translate(20px, -20px) scale(0.94); }
+    }
+    @keyframes orbFloat3 {
+      0%,100% { transform: translateX(-50%) scale(1); }
+      50%      { transform: translateX(-50%) translateY(-40px) scale(1.12); }
+    }
+
+    /* ===== NAV ===== */
+    .nav {
+      position: sticky; top: 0; z-index: 100;
+      backdrop-filter: blur(22px);
+      background: rgba(7,17,31,.80);
+      border-bottom: 1px solid var(--line);
+      transition: background .3s, box-shadow .3s;
+    }
+    .nav.scrolled {
+      background: rgba(7,17,31,.95);
+      box-shadow: 0 4px 32px rgba(0,0,0,.4);
+    }
+    .nav-inner { min-height: 74px; display: flex; align-items: center; justify-content: space-between; gap: 24px; position: relative; z-index: 1; }
+    .logo {
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.2px;
+      transition: opacity .2s;
+    }
+    .logo:hover { opacity: .85; }
+    .logo-mark {
+      width:38px; height:38px; border-radius:14px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display:grid; place-items:center;
+      box-shadow: 0 0 0 0 rgba(56,189,248,.5);
+      animation: logoPulse 2.5s ease-in-out infinite;
+      font-size: 18px;
+    }
+    @keyframes logoPulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(56,189,248,.4); }
+      50%      { box-shadow: 0 0 0 8px rgba(56,189,248,0); }
+    }
+    .nav-links { display:flex; gap:18px; color:var(--muted); font-size:14px; }
+    .nav-links a {
+      position: relative; padding: 4px 0;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 2px; background: var(--primary);
+      transform: scaleX(0); transition: transform .25s ease;
+      border-radius: 2px;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:13px 20px; border-radius:999px; font-weight:800; border:1px solid transparent;
+      transition: all .25s ease; cursor:pointer; font-family: inherit; font-size: 15px;
+      position: relative; overflow: hidden;
+    }
+    .btn::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.15), transparent);
+      opacity: 0; transition: opacity .25s;
+    }
+    .btn:hover::after { opacity: 1; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color:#06101d;
+      box-shadow: 0 18px 35px rgba(56,189,248,.25);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 24px 45px rgba(56,189,248,.40);
+    }
+    .btn-primary:active { transform: translateY(-1px); }
+    .btn-ghost {
+      border-color:var(--line);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+    }
+    .btn-ghost:hover {
+      background: rgba(255,255,255,.12);
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,.25);
+    }
+
+    /* Shimmer effect on btn-primary */
+    .btn-primary .shimmer {
+      position: absolute; top: 0; left: -100%; width: 60%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    @keyframes shimmer {
+      0%   { left: -100%; }
+      60%,100% { left: 160%; }
+    }
+
+    /* ===== BADGE ===== */
+    .badge {
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 14px; border:1px solid var(--line);
+      border-radius:999px; background:rgba(255,255,255,.06);
+      color:var(--muted); font-size:14px;
+    }
+    .badge.pulse-badge {
+      animation: badgePulse 2s ease-in-out infinite;
+      border-color: rgba(56,189,248,.4);
+    }
+    @keyframes badgePulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(56,189,248,.2); }
+      50%      { box-shadow: 0 0 0 6px rgba(56,189,248,0); }
+    }
+
+    /* ===== HERO ===== */
+    .hero { padding: 72px 0 52px; position: relative; z-index: 1; }
+    .hero-grid {
+      display:grid; grid-template-columns: 1.05fr .95fr;
+      gap:46px; align-items:center;
+    }
+    h1 {
+      font-size: clamp(38px, 6vw, 66px);
+      line-height:1.02; margin:18px 0 18px;
+      letter-spacing:-2.2px;
+    }
+    h1 span, .gradient {
+      background: linear-gradient(135deg, var(--primary), #fff 50%, var(--secondary));
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      background-size: 200% auto;
+      animation: gradientShift 4s ease infinite;
+    }
+    @keyframes gradientShift {
+      0%   { background-position: 0% center; }
+      50%  { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+    .sub { color: var(--muted); font-size: 18px; max-width: 620px; }
+    .hero-actions { display:flex; flex-wrap:wrap; gap:14px; margin-top:28px; }
+    .proof-row {
+      display:flex; flex-wrap:wrap; gap:18px;
+      margin-top:28px; color:var(--muted); font-size:14px;
+    }
+    .proof-row b { color:var(--text); }
+    .proof-row span {
+      display: flex; align-items: center; gap: 6px;
+    }
+    .proof-row span::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ===== PHONE MOCKUP ===== */
+    .phone {
+      position: relative; min-height: 560px;
+      border-radius: 38px; padding:18px;
+      background: linear-gradient(145deg, rgba(255,255,255,.18), rgba(255,255,255,.03));
+      border:1px solid var(--line);
+      box-shadow: 0 35px 80px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.05);
+      animation: phoneFloat 5s ease-in-out infinite;
+    }
+    @keyframes phoneFloat {
+      0%,100% { transform: translateY(0px) rotate(0deg); }
+      33%      { transform: translateY(-10px) rotate(.4deg); }
+      66%      { transform: translateY(-5px) rotate(-.3deg); }
+    }
+    .phone-glow {
+      position: absolute; inset: -20px;
+      background: radial-gradient(ellipse at 50% 100%, rgba(56,189,248,.15), transparent 70%);
+      border-radius: 60px; z-index: -1;
+      animation: glowPulse 4s ease-in-out infinite;
+    }
+    @keyframes glowPulse {
+      0%,100% { opacity: .6; }
+      50%      { opacity: 1; }
+    }
+    .phone-screen {
+      height:100%; min-height: 520px; border-radius: 28px;
+      background: #07111f; overflow:hidden; border:1px solid var(--line); position:relative;
+    }
+    .screen-top {
+      padding:22px;
+      background: linear-gradient(135deg, rgba(56,189,248,.22), rgba(167,139,250,.22));
+    }
+    .game-card {
+      margin:20px; border:1px solid var(--line); border-radius:22px;
+      background:rgba(255,255,255,.06); overflow:hidden;
+    }
+    .game-banner {
+      height:120px;
+      background: linear-gradient(135deg, #2dd4bf, #6366f1 48%, #f472b6);
+      display:flex; align-items:end; padding:18px;
+      font-weight:900; font-size:28px;
+      position: relative; overflow: hidden;
+    }
+    .game-banner::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.1), transparent 50%);
+      animation: bannerShine 3s ease-in-out infinite;
+    }
+    @keyframes bannerShine {
+      0%,100% { opacity: 0; }
+      50%      { opacity: 1; }
+    }
+    .game-body { padding:18px; }
+    .input {
+      padding:14px 16px; border-radius:14px;
+      background:rgba(255,255,255,.07); border:1px solid var(--line);
+      color:var(--muted); margin:10px 0;
+    }
+    .diamond-grid { display:grid; grid-template-columns: repeat(2,1fr); gap:10px; margin:14px 0; }
+    .diamond {
+      padding:14px; border-radius:15px; border:2px solid var(--line);
+      background:rgba(255,255,255,.06); cursor: pointer;
+      transition: all .2s ease;
+      position: relative;
+    }
+    .diamond:hover,
+    .diamond.selected {
+      border-color: var(--primary);
+      background: rgba(56,189,248,.12);
+      transform: scale(1.03);
+      box-shadow: 0 4px 20px rgba(56,189,248,.2);
+    }
+    .diamond.selected::after {
+      content: '✓';
+      position: absolute; top: 6px; right: 8px;
+      font-size: 11px; color: var(--primary); font-weight: 900;
+    }
+    .diamond strong { display:block; }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 70px 0; position: relative; z-index: 1; }
+    .section-title { max-width:760px; margin:0 auto 38px; text-align:center; }
+    h2 { font-size: clamp(30px, 4vw, 46px); line-height:1.08; margin:0 0 14px; letter-spacing:-1.2px; }
+    .muted { color: var(--muted); }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:18px; }
+    .grid-2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:22px; }
+
+    /* ===== CARDS ===== */
+    .card {
+      padding:24px; border:1px solid var(--line); border-radius:26px;
+      background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+      box-shadow: 0 20px 60px rgba(0,0,0,.16);
+      transition: all .3s ease;
+      position: relative; overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(56,189,248,.5), transparent);
+      opacity: 0; transition: opacity .3s;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(56,189,248,.3);
+      box-shadow: 0 30px 80px rgba(0,0,0,.25), 0 0 30px rgba(56,189,248,.08);
+    }
+    .card:hover::before { opacity: 1; }
+
+    .icon {
+      width:42px; height:42px; border-radius:15px;
+      display:grid; place-items:center;
+      background:rgba(56,189,248,.16); color: var(--primary);
+      font-weight:900; margin-bottom:14px;
+      transition: all .3s;
+    }
+    .card:hover .icon {
+      background: rgba(56,189,248,.28);
+      box-shadow: 0 0 20px rgba(56,189,248,.3);
+    }
+
+    /* ===== STEPS ===== */
+    .steps { counter-reset: step; }
+    .step { position:relative; padding-left:72px; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position:absolute; left:0; top:24px;
+      width:48px; height:48px; border-radius:16px;
+      background:linear-gradient(135deg, var(--primary), var(--secondary));
+      color:#06101d; display:grid; place-items:center; font-weight:900;
+      box-shadow: 0 8px 24px rgba(56,189,248,.3);
+      transition: transform .3s, box-shadow .3s;
+    }
+    .step:hover::before {
+      transform: scale(1.1) rotate(5deg);
+      box-shadow: 0 12px 32px rgba(56,189,248,.5);
+    }
+
+    /* ===== PRICING ===== */
+    .price { font-size:42px; font-weight:950; margin:10px 0; }
+    .card-popular {
+      border-color:rgba(56,189,248,.55) !important;
+      background: linear-gradient(180deg, rgba(56,189,248,.10), rgba(167,139,250,.05)) !important;
+    }
+    .card-popular::before { opacity: 1 !important; }
+
+    /* ===== TESTIMONIAL ===== */
+    .testimonial {
+      font-style:italic;
+      transition: all .3s;
+    }
+    .testimonial:hover {
+      background: linear-gradient(180deg, rgba(56,189,248,.08), rgba(255,255,255,.035));
+    }
+    .stars {
+      color: var(--warning);
+      font-size: 14px; margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    /* ===== CTA BAND ===== */
+    .cta-band {
+      text-align:center; padding:48px; border-radius:34px;
+      background: linear-gradient(135deg, rgba(56,189,248,.20), rgba(167,139,250,.20));
+      border:1px solid var(--line);
+      position: relative; overflow: hidden;
+    }
+    .cta-band::before {
+      content: ''; position: absolute;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(56,189,248,.15), transparent 70%);
+      top: -100px; left: 50%; transform: translateX(-50%);
+      animation: ctaGlow 4s ease-in-out infinite;
+    }
+    @keyframes ctaGlow {
+      0%,100% { transform: translateX(-50%) scale(1); opacity: .6; }
+      50%      { transform: translateX(-50%) scale(1.3); opacity: 1; }
+    }
+    .cta-band > * { position: relative; z-index: 1; }
+
+    /* ===== LEAD FORM ===== */
+    .lead-form { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:20px; }
+    .lead-form input {
+      min-width:220px; padding:14px 16px; border-radius:999px;
+      border:1px solid var(--line); background:rgba(255,255,255,.08);
+      color: var(--text); font-family: inherit; font-size: 15px;
+      transition: all .2s;
+      outline: none;
+    }
+    .lead-form input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(56,189,248,.2);
+      background: rgba(255,255,255,.12);
+    }
+    .lead-form input::placeholder { color: rgba(203,213,225,.5); }
+
+    /* ===== FAQ ===== */
+    .faq details {
+      padding:20px 22px; border:1px solid var(--line); border-radius:20px;
+      background:rgba(255,255,255,.05); margin-bottom:12px;
+      transition: all .3s;
+    }
+    .faq details:hover { border-color: rgba(56,189,248,.25); }
+    .faq details[open] {
+      border-color: rgba(56,189,248,.35);
+      background: rgba(56,189,248,.05);
+    }
+    .faq summary {
+      cursor:pointer; font-weight:800;
+      list-style: none;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .faq summary::-webkit-details-marker { display: none; }
+    .faq summary::after {
+      content: '+'; font-size: 20px; color: var(--primary);
+      transition: transform .3s;
+    }
+    details[open] summary::after { transform: rotate(45deg); }
+    .faq details p { margin: 14px 0 0; animation: fadeDown .25s ease; }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== FOOTER ===== */
+    footer { padding:36px 0; border-top:1px solid var(--line); color:var(--muted); position: relative; z-index: 1; }
+    .footer-grid { display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .identity {
+      background:rgba(34,197,94,.1); border:1px solid rgba(34,197,94,.28);
+      padding:12px 16px; border-radius:16px; color:#dcfce7;
+      animation: identityGlow 3s ease-in-out infinite;
+    }
+    @keyframes identityGlow {
+      0%,100% { box-shadow: 0 0 0 0 rgba(34,197,94,.2); }
+      50%      { box-shadow: 0 0 12px rgba(34,197,94,.3); }
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0; transform: translateX(-40px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right {
+      opacity: 0; transform: translateX(40px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* delay utilities */
+    .d1 { transition-delay: .1s; }
+    .d2 { transition-delay: .2s; }
+    .d3 { transition-delay: .3s; }
+
+    /* ===== TOAST ===== */
+    #toast {
+      position: fixed; bottom: 28px; right: 28px; z-index: 999;
+      padding: 14px 22px; border-radius: 18px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: #06101d; font-weight: 800; font-size: 15px;
+      box-shadow: 0 16px 40px rgba(0,0,0,.35);
+      transform: translateY(80px); opacity: 0;
+      transition: all .4s cubic-bezier(.34,1.56,.64,1);
+      pointer-events: none;
+    }
+    #toast.show { transform: translateY(0); opacity: 1; }
+
+    /* ===== DIVIDER ===== */
+    .section-sep {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--line), transparent);
+      margin: 0;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 860px) {
+      .hero-grid, .grid-2, .grid-3 { grid-template-columns:1fr; }
+      .nav-links { display:none; }
+      .phone { min-height:auto; animation: none; }
+      .cta-band { padding:30px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orbs" aria-hidden="true"><span></span></div>
+
+  <!-- Toast notification -->
+  <div id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="mainNav">
+    <div class="container nav-inner">
+      <a class="logo" href="#top" aria-label="PixelPay TopUp">
+        <span class="logo-mark">⚡</span>
+        PixelPay TopUp
+      </a>
+      <div class="nav-links">
+        <a href="#fitur">Fitur</a>
+        <a href="#cara-kerja">Cara Kerja</a>
+        <a href="#harga">Paket</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="btn btn-primary" href="#order" id="navCta">
+        <span class="shimmer"></span>
+        Top Up Sekarang
+      </a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal-left">
+          <div class="badge pulse-badge">⚡ USP: Top up game otomatis, cepat, dan aman 24/7</div>
+          <h1>Top up game <span id="heroGradient">anti ribet</span>,<br>saldo masuk lebih cepat.</h1>
+          <p class="sub">PixelPay TopUp membantu gamer membeli diamond, UC, voucher, dan item digital dengan proses otomatis, harga transparan, serta bukti transaksi real-time.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#order" id="heroCtaBtn">
+              <span class="shimmer"></span>
+              Mulai Top Up
+            </a>
+            <a class="btn btn-ghost" href="#demo">Lihat Demo</a>
+          </div>
+          <div class="proof-row">
+            <span><b id="counterTx">0</b> transaksi simulasi</span>
+            <span><b>24/7</b> sistem aktif</span>
+            <span><b>3 menit</b> estimasi proses</span>
+          </div>
+        </div>
+
+        <div class="reveal-right" style="position:relative;">
+          <div class="phone-glow"></div>
+          <div class="phone" id="demo" aria-label="Hero image mockup aplikasi top up">
+            <div class="phone-screen">
+              <div class="screen-top">
+                <div class="badge">Dashboard TopUp</div>
+                <h3 style="font-size:30px;margin:18px 0 0">Order cepat<br><span style="color:var(--muted);font-size:18px;font-weight:400">dari satu halaman</span></h3>
+              </div>
+              <div class="game-card">
+                <div class="game-banner">Mobile Legends</div>
+                <div class="game-body">
+                  <div class="input" style="cursor:text;" contenteditable="false">Masukkan User ID</div>
+                  <div class="input">Pilih Server</div>
+                  <div class="diamond-grid" id="diamondGrid">
+                    <div class="diamond" data-price="19000" onclick="selectDiamond(this,'86 💎','Rp 19.000')">
+                      <strong>86 💎</strong><span class="muted">Rp 19.000</span>
+                    </div>
+                    <div class="diamond" data-price="38000" onclick="selectDiamond(this,'172 💎','Rp 38.000')">
+                      <strong>172 💎</strong><span class="muted">Rp 38.000</span>
+                    </div>
+                    <div class="diamond" data-price="57000" onclick="selectDiamond(this,'257 💎','Rp 57.000')">
+                      <strong>257 💎</strong><span class="muted">Rp 57.000</span>
+                    </div>
+                    <div class="diamond" data-price="76000" onclick="selectDiamond(this,'344 💎','Rp 76.000')">
+                      <strong>344 💎</strong><span class="muted">Rp 76.000</span>
+                    </div>
+                  </div>
+                  <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" href="#order" id="bayarBtn">
+                    <span class="shimmer"></span>
+                    Bayar Sekarang
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== PROBLEM / SOLUTION ===== -->
+    <section id="problem">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>12 Anatomi Landing Page</h2>
+          <p class="muted">Headline, USP, hero image, CTA, problem, solution, benefit, fitur, cara kerja, social proof, FAQ, dan footer identitas.</p>
+        </div>
+        <div class="grid-2">
+          <div class="card reveal d1">
+            <div class="icon">!</div>
+            <h3>Problem</h3>
+            <p class="muted">Proses lama, harga abu-abu, dan bukti transaksi hilang.</p>
+          </div>
+          <div class="card reveal d2">
+            <div class="icon">✓</div>
+            <h3>Solution</h3>
+            <p class="muted">Satu halaman untuk order, bayar, dan tracking.</p>
+          </div>
+          <div class="card reveal d1" style="grid-column: span 2 / span 2; display: flex; gap: 20px; align-items: flex-start;">
+            <div class="icon" style="flex-shrink:0;">★</div>
+            <div>
+              <h3>Benefit</h3>
+              <p class="muted">Otomatis, transparan, aman, dan mudah dipahami.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== FITUR ===== -->
+    <section id="fitur">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Paket Populer</h2>
+          <p class="muted">Contoh struktur harga untuk landing page.</p>
+        </div>
+        <div class="grid-3" id="harga">
+          <div class="card reveal d1">
+            <h3>Starter</h3>
+            <div class="price">Rp19K</div>
+            <p class="muted">Untuk pembelian kecil.</p>
+            <a class="btn btn-ghost" href="#order" style="margin-top:8px;">Pilih</a>
+          </div>
+          <div class="card card-popular reveal d2">
+            <div class="badge" style="margin-bottom:10px;">Paling diminati</div>
+            <h3>Rank Push</h3>
+            <div class="price">Rp57K</div>
+            <p class="muted">Paket harian seimbang.</p>
+            <a class="btn btn-primary" href="#order" style="margin-top:8px;">
+              <span class="shimmer"></span>Pilih
+            </a>
+          </div>
+          <div class="card reveal d3">
+            <h3>Pro Player</h3>
+            <div class="price">Rp119K</div>
+            <p class="muted">Prioritas proses.</p>
+            <a class="btn btn-ghost" href="#order" style="margin-top:8px;">Pilih</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== CARA KERJA ===== -->
+    <section id="cara-kerja">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Cara kerja sederhana</h2>
+          <p class="muted">Dari klik sampai item masuk dibuat sesingkat mungkin.</p>
+        </div>
+        <div class="grid-3 steps">
+          <div class="card step reveal d1">
+            <h3>Pilih game</h3>
+            <p class="muted">Pilih produk digital dan nominal yang dibutuhkan.</p>
+          </div>
+          <div class="card step reveal d2">
+            <h3>Isi ID pemain</h3>
+            <p class="muted">Masukkan data akun dengan pengecekan ulang sebelum bayar.</p>
+          </div>
+          <div class="card step reveal d3">
+            <h3>Bayar &amp; tracking</h3>
+            <p class="muted">Lakukan pembayaran dan cek status order secara real-time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== TESTIMONI ===== -->
+    <section id="testimoni">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Social Proof</h2>
+          <p class="muted">Contoh testimoni untuk memperkuat kepercayaan calon pelanggan.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card testimonial reveal d1">
+            <div class="stars">★★★★★</div>
+            <p>"UI-nya jelas, tinggal isi ID dan bayar. Cocok buat yang tidak mau chat panjang."</p>
+            <br><b>- Raka, Gamer</b>
+          </div>
+          <div class="card testimonial reveal d2">
+            <div class="stars">★★★★★</div>
+            <p>"Status order mudah dipantau, jadi lebih tenang."</p>
+            <br><b>- Dinda, Mahasiswa</b>
+          </div>
+          <div class="card testimonial reveal d3">
+            <div class="stars">★★★★★</div>
+            <p>"Landing page-nya langsung menjawab pertanyaan utama: cepat, aman, dan berapa harganya."</p>
+            <br><b>- Bima, Streamer</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== CTA / ORDER ===== -->
+    <section id="order">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Siap top up tanpa drama?</h2>
+          <p class="muted">CTA akhir + lead capture untuk mengumpulkan calon pelanggan.</p>
+          <form class="lead-form" onsubmit="handleForm(event)">
+            <input type="text" id="inputNama" placeholder="Nama / WhatsApp" aria-label="Nama atau WhatsApp" required />
+            <input type="email" id="inputEmail" placeholder="Email" aria-label="Email" required />
+            <button class="btn btn-primary" type="submit">
+              <span class="shimmer"></span>Kirim
+            </button>
+          </form>
+          <p class="muted" style="font-size:13px;margin-top:16px">*Form ini contoh tampilan landing page untuk tugas UTS.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>FAQ</h2>
+          <p class="muted">Bagian ini mengurangi keraguan sebelum pelanggan klik CTA.</p>
+        </div>
+        <details open class="reveal d1">
+          <summary>Apakah ini bisnis sungguhan?</summary>
+          <p class="muted">Ini adalah konsep landing page untuk tugas Digital Business. Konten dapat dikembangkan menjadi bisnis sungguhan.</p>
+        </details>
+        <details class="reveal d2">
+          <summary>Apakah pembayaran sudah terhubung payment gateway?</summary>
+          <p class="muted">Versi HTML ini masih statis. Implementasi lanjutan dapat memakai Midtrans, Xendit, atau payment gateway lain.</p>
+        </details>
+        <details class="reveal d3">
+          <summary>Apakah bisa di-deploy gratis?</summary>
+          <p class="muted">Bisa. File ini dapat diunggah ke Netlify, Vercel, GitHub Pages, atau hosting gratis lain.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><b>PixelPay TopUp</b><br>Landing page bisnis IT/Informatika</div>
+      <div class="identity">Lamberth Paulinus Rumpaidus – 23.11.5826</div>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== NAVBAR SCROLL ===== */
+    const nav = document.getElementById('mainNav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 30);
+    }, { passive: true });
+
+    /* ===== SCROLL REVEAL ===== */
+    const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    revealEls.forEach(el => revealObserver.observe(el));
+
+    /* ===== COUNTER ANIMATION ===== */
+    function animateCount(el, target, duration = 1800, suffix = '+') {
+      let start = null;
+      const step = (ts) => {
+        if (!start) start = ts;
+        const progress = Math.min((ts - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        el.textContent = Math.floor(eased * target).toLocaleString('id-ID') + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+    const counterEl = document.getElementById('counterTx');
+    let counterStarted = false;
+    const counterObs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && !counterStarted) {
+        counterStarted = true;
+        animateCount(counterEl, 10000, 2000, '+');
+        counterObs.disconnect();
+      }
+    }, { threshold: 0.5 });
+    counterObs.observe(counterEl);
+
+    /* ===== DIAMOND SELECTION ===== */
+    function selectDiamond(el, name, price) {
+      document.querySelectorAll('.diamond').forEach(d => d.classList.remove('selected'));
+      el.classList.add('selected');
+      showToast('💎 ' + name + ' dipilih — ' + price);
+    }
+
+    /* ===== TOAST ===== */
+    let toastTimer = null;
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+    }
+
+    /* ===== LEAD FORM ===== */
+    function handleForm(e) {
+      e.preventDefault();
+      const nama = document.getElementById('inputNama').value.trim();
+      showToast('✅ Terima kasih, ' + (nama || 'Gamer') + '! Kami akan menghubungi Anda.');
+      e.target.reset();
+    }
+
+    /* ===== BAYAR BUTTON FEEDBACK ===== */
+    document.getElementById('bayarBtn').addEventListener('click', function(e) {
+      e.preventDefault();
+      const selected = document.querySelector('.diamond.selected');
+      if (!selected) {
+        showToast('⚠️ Pilih nominal diamond terlebih dahulu!');
+        document.getElementById('diamondGrid').style.animation = 'shake .4s ease';
+        setTimeout(() => {
+          document.getElementById('diamondGrid').style.animation = '';
+        }, 400);
+      } else {
+        showToast('🎮 Mengarahkan ke halaman pembayaran...');
+        setTimeout(() => window.location.href = '#order', 1200);
+      }
+    });
+
+    /* ===== SHAKE KEYFRAME (inject) ===== */
+    const style = document.createElement('style');
+    style.textContent = `@keyframes shake {
+      0%,100% { transform: translateX(0); }
+      20%      { transform: translateX(-6px); }
+      40%      { transform: translateX(6px); }
+      60%      { transform: translateX(-4px); }
+      80%      { transform: translateX(4px); }
+    }`;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
