@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelPay TopUp - Top Up Game Cepat &amp; Aman</title>
+  <meta name="description"
+    content="Landing page PixelPay TopUp, layanan top-up game berbasis IT yang cepat, aman, dan cocok untuk gamer Indonesia." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- CSS Eksternal (Lebih Ringan & Rapi) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+  <!-- Animated background orbs -->
+  <div class="bg-orbs" aria-hidden="true"><span></span></div>
+
+  <!-- Toast notification -->
+  <div id="toast" role="alert" aria-live="polite"></div>
+
+  <!-- ===== NAV ===== -->
+  <nav class="nav" id="mainNav">
+    <div class="container nav-inner">
+      <a class="logo" href="#top" aria-label="PixelPay TopUp">
+        <span class="logo-mark">⚡</span>
+        PixelPay TopUp
+      </a>
+      <div class="nav-links">
+        <a href="#fitur">Fitur</a>
+        <a href="#cara-kerja">Cara Kerja</a>
+        <a href="#harga">Paket</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="btn btn-primary" href="#order" id="navCta">
+        <span class="shimmer"></span>
+        Top Up Sekarang
+      </a>
+    </div>
+  </nav>
+
+  <main id="top">
+
+    <!-- ===== HERO ===== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="reveal-left">
+          <div class="badge pulse-badge">⚡ USP: Top up game otomatis, cepat, dan aman 24/7</div>
+          <h1>Top up game <span id="heroGradient">anti ribet</span>,<br>saldo masuk lebih cepat.</h1>
+          <p class="sub">PixelPay TopUp membantu gamer membeli diamond, UC, voucher, dan item digital dengan proses
+            otomatis, harga transparan, serta bukti transaksi real-time.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#order" id="heroCtaBtn">
+              <span class="shimmer"></span>
+              Mulai Top Up
+            </a>
+            <a class="btn btn-ghost" href="#demo">Lihat Demo</a>
+          </div>
+          <div class="proof-row">
+            <span><b id="counterTx">10.000</b> transaksi simulasi</span>
+            <span><b>24/7</b> sistem aktif</span>
+            <span><b>3 menit</b> estimasi proses</span>
+          </div>
+        </div>
+
+        <!-- PHONE MOCKUP INTERAKTIF -->
+        <div class="reveal-right" style="position:relative;">
+          <div class="phone-glow"></div>
+          <div class="phone" id="demo" aria-label="Mockup Aplikasi Top Up Interaktif">
+            <div class="phone-screen">
+
+              <!-- TOP BRANDING MOBILE -->
+              <div class="screen-top">
+                <div class="badge">Dashboard TopUp</div>
+                <h3 style="font-size:26px;margin:12px 0 0; font-weight:800; line-height:1.2;">
+                  Order cepat<br>
+                  <span style="color:var(--muted);font-size:16px;font-weight:400">dari satu halaman</span>
+                </h3>
+              </div>
+
+              <!-- LAYAR 1: PILIH GAME & ORDER -->
+              <div class="screen-view active" id="screenOrder">
+                <!-- GAME SELECTOR TABS -->
+                <div class="game-selector">
+                  <div class="game-tab active" id="tabML" onclick="switchGame('ml')">Mobile Legends</div>
+                  <div class="game-tab" id="tabFF" onclick="switchGame('ff')">Free Fire</div>
+                  <div class="game-tab" id="tabPUBG" onclick="switchGame('pubg')">PUBG Mobile</div>
+                  <div class="game-tab" id="tabGI" onclick="switchGame('gi')">Genshin Impact</div>
+                </div>
+
+                <div class="game-card">
+                  <div class="game-banner" id="phoneGameBanner">Mobile Legends</div>
+                  <div class="game-body">
+                    <!-- INPUT USER ID & SERVER -->
+                    <div class="input-group">
+                      <input type="text" class="input" id="inputUserId" placeholder="Masukkan User ID (Server ID)">
+                      <button type="button" class="input-btn" onclick="verifyUserId()">Cek ID</button>
+                    </div>
+                    <!-- SERVER SELECTOR (HANYA UNTUK GAME ML/GI) -->
+                    <select class="input" id="selectGameServer">
+                      <option value="Asia">Server: Asia / Indonesia</option>
+                      <option value="Europe">Server: Europe</option>
+                      <option value="America">Server: America</option>
+                    </select>
+                    <!-- PESAN VERIFIKASI AKUN -->
+                    <div class="user-verification-msg" id="userVerifyMsg"></div>
+
+                    <!-- NOMINAL DIAMOND GRID -->
+                    <div class="diamond-grid" id="diamondGrid">
+                      <!-- Diisi dinamis oleh JS -->
+                    </div>
+
+                    <!-- PILIH METODE BAYAR -->
+                    <div class="payment-methods-title">Metode Pembayaran</div>
+                    <div class="payment-grid">
+                      <div class="pay-item selected" id="payQris" onclick="selectPayment('qris')">
+                        <div class="pay-left">
+                          <span class="pay-icon">📱</span>
+                          <div class="pay-info">
+                            <span class="pay-name">QRIS (Gopay/OVO/Dana)</span>
+                            <span class="pay-fee">Admin: Rp 0 (Instan)</span>
+                          </div>
+                        </div>
+                        <div class="pay-radio"></div>
+                      </div>
+
+                      <div class="pay-item" id="payDana" onclick="selectPayment('dana')">
+                        <div class="pay-left">
+                          <span class="pay-icon">👛</span>
+                          <div class="pay-info">
+                            <span class="pay-name">DANA E-Wallet</span>
+                            <span class="pay-fee">Admin: Rp 500</span>
+                          </div>
+                        </div>
+                        <div class="pay-radio"></div>
+                      </div>
+
+                      <div class="pay-item" id="payVa" onclick="selectPayment('va')">
+                        <div class="pay-left">
+                          <span class="pay-icon">🏦</span>
+                          <div class="pay-info">
+                            <span class="pay-name">BCA Virtual Account</span>
+                            <span class="pay-fee">Admin: Rp 2.500</span>
+                          </div>
+                        </div>
+                        <div class="pay-radio"></div>
+                      </div>
+                    </div>
+
+                    <!-- TOTAL HARGA & ACTION -->
+                    <div id="totalBayarText"
+                      style="text-align: right; margin-bottom: 14px; font-weight: 700; font-size: 13px; color: var(--muted);">
+                      Pilih nominal item</div>
+                    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px;" href="#"
+                      id="bayarBtn">
+                      <span class="shimmer"></span>
+                      Bayar Sekarang
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- LAYAR 2: SIMULASI PAYMENT GATEWAY -->
+              <div class="screen-view" id="screenGateway">
+                <div class="gateway-header">
+                  <div class="gateway-title">🔒 Payment Gateway</div>
+                  <div class="gateway-badge">Simulasi</div>
+                </div>
+                <div class="gateway-body">
+                  <div class="amount-box">
+                    <span>Total Pembayaran</span>
+                    <h2 id="gateTotalAmount">Rp 0</h2>
+                  </div>
+
+                  <!-- TAMPILAN JIKA PILIH QRIS / E-WALLET -->
+                  <div id="qrisView" class="instruction-box" style="width: 100%; text-align: center;">
+                    <div class="qr-container">
+                      <!-- Render QR Code Mockup via SVG -->
+                      <svg width="150" height="150" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="border: 4px solid #fff; border-radius: 8px;">
+                        <rect width="100" height="100" fill="white" />
+                        <!-- QR Code Mockup Blocks -->
+                        <rect x="5" y="5" width="25" height="25" fill="black" />
+                        <rect x="10" y="10" width="15" height="15" fill="white" />
+                        <rect x="12" y="12" width="11" height="11" fill="black" />
+
+                        <rect x="70" y="5" width="25" height="25" fill="black" />
+                        <rect x="75" y="10" width="15" height="15" fill="white" />
+                        <rect x="77" y="12" width="11" height="11" fill="black" />
+
+                        <rect x="5" y="70" width="25" height="25" fill="black" />
+                        <rect x="10" y="75" width="15" height="15" fill="white" />
+                        <rect x="12" y="77" width="11" height="11" fill="black" />
+
+                        <rect x="40" y="40" width="20" height="20" fill="black" />
+                        <rect x="45" y="45" width="10" height="10" fill="white" />
+
+                        <!-- random points -->
+                        <rect x="40" y="10" width="10" height="10" fill="black" />
+                        <rect x="55" y="20" width="10" height="5" fill="black" />
+                        <rect x="80" y="40" width="15" height="10" fill="black" />
+                        <rect x="40" y="80" width="10" height="15" fill="black" />
+                        <rect x="60" y="70" width="5" height="10" fill="black" />
+                        <rect x="85" y="85" width="10" height="10" fill="black" />
+                      </svg>
+                      <span
+                        style="font-size: 11px; color: #4b5563; font-weight: 700; margin-top: 8px; display: inline-block;">SCAN
+                        QRIS PIXELPAY</span>
+                    </div>
+                    <p class="muted" style="font-size: 12px; margin-bottom: 16px;">Silakan pindai kode QRIS dengan
+                      aplikasi pembayaran Anda.</p>
+                  </div>
+
+                  <!-- TAMPILAN JIKA PILIH VIRTUAL ACCOUNT -->
+                  <div id="vaView" class="instruction-box" style="display: none; width: 100%;">
+                    <div class="va-box">
+                      <div style="font-size: 12px; color: var(--muted); font-weight: 600;">Nomor Virtual Account BCA
+                      </div>
+                      <div class="va-row">
+                        <span class="va-number" id="vaNumText">88012 00000 00000</span>
+                        <button type="button" class="btn-copy" onclick="copyVA()">Salin</button>
+                      </div>
+                    </div>
+                    <div class="instruction-title">Cara Pembayaran:</div>
+                    <ol class="instruction-list">
+                      <li>Buka aplikasi m-BCA atau ATM BCA.</li>
+                      <li>Pilih menu <b>Transfer ➡️ Virtual Account</b>.</li>
+                      <li>Masukkan Nomor VA di atas.</li>
+                      <li>Konfirmasi nama tagihan dan klik Bayar.</li>
+                    </ol>
+                  </div>
+
+                  <!-- TIMER & CONFIRMATION -->
+                  <div class="countdown-box" id="gateTimer">
+                    Selesaikan pembayaran dalam 10:00
+                  </div>
+
+                  <a class="btn btn-primary" style="width:100%;justify-content:center;" href="#" id="btnGatewaySuccess">
+                    <span class="shimmer"></span>
+                    Simulasi Bayar Sukses
+                  </a>
+                </div>
+              </div>
+
+              <!-- LAYAR 3: STRUK / INVOICE SUKSES -->
+              <div class="screen-view" id="screenSuccess">
+                <div class="success-screen-body">
+                  <div class="success-checkmark">✓</div>
+                  <h3 class="success-title">Pembayaran Berhasil!</h3>
+                  <p class="success-desc">Top up Anda diproses &amp; saldo langsung terkirim otomatis.</p>
+
+                  <div class="receipt-box">
+                    <div class="receipt-row">
+                      <span class="receipt-label">Game</span>
+                      <span class="receipt-value" id="succGame">Mobile Legends</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">ID Akun</span>
+                      <span class="receipt-value" id="succUser">12345678 (User)</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">Item</span>
+                      <span class="receipt-value" id="succItem">86 💎</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">Pembayaran</span>
+                      <span class="receipt-value" id="succPay">QRIS</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">Total Harga</span>
+                      <span class="receipt-value price" id="succTotal">Rp 19.000</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">ID Transaksi</span>
+                      <span class="receipt-value" id="succTxId" style="font-family: monospace;">PX001</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">No. Serial (SN)</span>
+                      <span class="receipt-value" id="succSN" style="font-family: monospace;">SN-98765432</span>
+                    </div>
+                    <div class="receipt-row">
+                      <span class="receipt-label">Waktu</span>
+                      <span class="receipt-value" id="succDate">29/05/2026</span>
+                    </div>
+                  </div>
+
+                  <a class="btn btn-primary" style="width:100%;justify-content:center;" href="#" id="btnSuccessFinish">
+                    <span class="shimmer"></span>
+                    Top Up Lagi
+                  </a>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== PROBLEM / SOLUTION ===== -->
+    <section id="problem">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>12 Anatomi Landing Page</h2>
+        </div>
+        <div class="grid-2">
+          <div class="card reveal d1">
+            <div class="icon">!</div>
+            <h3>Problem</h3>
+            <p class="muted">Proses lama, harga abu-abu, dan bukti transaksi hilang.</p>
+          </div>
+          <div class="card reveal d2">
+            <div class="icon">✓</div>
+            <h3>Solution</h3>
+            <p class="muted">Satu halaman untuk order, bayar, dan tracking.</p>
+          </div>
+          <div class="card reveal d1"
+            style="grid-column: span 2 / span 2; display: flex; gap: 20px; align-items: flex-start;">
+            <div class="icon" style="flex-shrink:0;">★</div>
+            <div>
+              <h3>Benefit</h3>
+              <p class="muted">Otomatis, transparan, aman, dan mudah dipahami.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== FITUR ===== -->
+    <section id="fitur">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Paket Populer</h2>
+          <p class="muted">Contoh struktur harga untuk landing page.</p>
+        </div>
+        <div class="grid-3" id="harga">
+          <div class="card reveal d1">
+            <h3>Starter</h3>
+            <div class="price">Rp19K</div>
+            <p class="muted">Untuk pembelian kecil.</p>
+            <a class="btn btn-ghost" href="#order" style="margin-top:8px;">Pilih</a>
+          </div>
+          <div class="card card-popular reveal d2">
+            <div class="badge" style="margin-bottom:10px;">Paling diminati</div>
+            <h3>Rank Push</h3>
+            <div class="price">Rp57K</div>
+            <p class="muted">Paket harian seimbang.</p>
+            <a class="btn btn-primary" href="#order" style="margin-top:8px;">
+              <span class="shimmer"></span>Pilih
+            </a>
+          </div>
+          <div class="card reveal d3">
+            <h3>Pro Player</h3>
+            <div class="price">Rp119K</div>
+            <p class="muted">Prioritas proses.</p>
+            <a class="btn btn-ghost" href="#order" style="margin-top:8px;">Pilih</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== CARA KERJA ===== -->
+    <section id="cara-kerja">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Cara kerja sederhana</h2>
+          <p class="muted">Dari klik sampai item masuk dibuat sesingkat mungkin.</p>
+        </div>
+        <div class="grid-3 steps">
+          <div class="card step reveal d1">
+            <h3>Pilih game</h3>
+            <p class="muted">Pilih produk digital dan nominal yang dibutuhkan.</p>
+          </div>
+          <div class="card step reveal d2">
+            <h3>Isi ID pemain</h3>
+            <p class="muted">Masukkan data akun dengan pengecekan ulang sebelum bayar.</p>
+          </div>
+          <div class="card step reveal d3">
+            <h3>Bayar &amp; tracking</h3>
+            <p class="muted">Lakukan pembayaran dan cek status order secara real-time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== TESTIMONI ===== -->
+    <section id="testimoni">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>Social Proof</h2>
+          <p class="muted">Contoh testimoni untuk memperkuat kepercayaan calon pelanggan.</p>
+        </div>
+        <div class="grid-3">
+          <div class="card testimonial reveal d1">
+            <div class="stars">★★★★★</div>
+            <p>"UI-nya jelas, tinggal isi ID dan bayar. Cocok buat yang tidak mau chat panjang."</p>
+            <br><b>- Raka, Gamer</b>
+          </div>
+          <div class="card testimonial reveal d2">
+            <div class="stars">★★★★★</div>
+            <p>"Status order mudah dipantau, jadi lebih tenang."</p>
+            <br><b>- Dinda, Mahasiswa</b>
+          </div>
+          <div class="card testimonial reveal d3">
+            <div class="stars">★★★★★</div>
+            <p>"Landing page-nya langsung menjawab pertanyaan utama: cepat, aman, dan berapa harganya."</p>
+            <br><b>- Bima, Streamer</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== CTA / ORDER ===== -->
+    <section id="order">
+      <div class="container">
+        <div class="cta-band reveal">
+          <h2>Siap top up tanpa drama?</h2>
+          <p class="muted">CTA akhir + lead capture untuk mengumpulkan calon pelanggan.</p>
+          <form class="lead-form" onsubmit="handleForm(event)">
+            <input type="text" id="inputNama" placeholder="Nama / WhatsApp" aria-label="Nama atau WhatsApp" required />
+            <input type="email" id="inputEmail" placeholder="Email" aria-label="Email" required />
+            <button class="btn btn-primary" type="submit">
+              <span class="shimmer"></span>Kirim
+            </button>
+          </form>
+          <p class="muted" style="font-size:13px;margin-top:16px">Form ini hanya contoh tampilan landing page</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-sep"></div>
+
+    <!-- ===== FAQ ===== -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>FAQ</h2>
+          <p class="muted">Bagian ini mengurangi keraguan sebelum pelanggan membeli.</p>
+        </div>
+        <details open class="reveal d1">
+          <summary>Apakah ini bisnis sungguhan?</summary>
+          <p class="muted">Ini adalah konsep landing page untuk tugas Digital Business. Konten dapat dikembangkan
+            menjadi bisnis sungguhan.</p>
+        </details>
+        <details class="reveal d2">
+          <summary>Apakah pembayaran sudah terhubung payment gateway?</summary>
+          <p class="muted">Versi HTML ini mensimulasikan sistem pembayaran secara interaktif (QRIS &amp; Virtual
+            Account) untuk keperluan tugas UTS.</p>
+        </details>
+        <details class="reveal d3">
+          <summary>Apakah bisa di-deploy gratis?</summary>
+          <p class="muted">Bisa. File ini dapat diunggah ke Netlify, Vercel, GitHub Pages, atau hosting gratis lain.</p>
+        </details>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div><b>PixelPay TopUp</b><br>Landing page bisnis IT/Informatika</div>
+      <div class="identity">Lamberth Paulinus Rumpaidus – 23.11.5826</div>
+    </div>
+  </footer>
+
+  <!-- JS Eksternal (Ringan & Responsif) -->
+  <script src="js/app.js" defer></script>
+</body>
+
+</html>
