@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,16 +12,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-166GB4JJDP"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-166GB4JJDP"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  gtag('config', 'G-166GB4JJDP');
-</script>
+    gtag('config', 'G-166GB4JJDP');
+  </script>
 </head>
+
 <body>
   <div class="bg-orbs" aria-hidden="true"><span></span></div>
   <div id="toast" role="alert" aria-live="polite"></div>
@@ -63,7 +65,8 @@
         <div class="reveal-left">
           <div class="badge pulse-badge" id="heroBadge">⚡ USP: Top up game otomatis, cepat, dan aman 24/7</div>
           <h1 id="heroH1">Top up game <span id="heroGradient">anti ribet</span>,<br>saldo masuk lebih cepat.</h1>
-          <p class="sub" id="heroSub">PixelPay TopUp membantu gamer membeli diamond, UC, voucher, dan item digital dengan proses
+          <p class="sub" id="heroSub">PixelPay TopUp membantu gamer membeli diamond, UC, voucher, dan item digital
+            dengan proses
             otomatis, harga transparan, serta bukti transaksi real-time.</p>
           <div class="hero-actions">
             <a class="btn btn-primary" href="#order" id="heroCtaBtn">
@@ -86,7 +89,8 @@
                 <div class="badge" id="phoneDashboard">Dashboard TopUp</div>
                 <h3 style="font-size:26px;margin:12px 0 0; font-weight:800; line-height:1.2;">
                   <span id="phoneOrderFast">Order cepat</span><br>
-                  <span style="color:var(--muted);font-size:16px;font-weight:400" id="phoneOrderSub">dari satu halaman</span>
+                  <span style="color:var(--muted);font-size:16px;font-weight:400" id="phoneOrderSub">dari satu
+                    halaman</span>
                 </h3>
               </div>
               <div class="screen-view active" id="screenOrder">
@@ -99,9 +103,16 @@
                 <div class="game-card">
                   <div class="game-banner" id="phoneGameBanner">Mobile Legends</div>
                   <div class="game-body">
-                    <div class="input-group">
-                      <input type="text" class="input" id="inputUserId" placeholder="Masukkan User ID (Server ID)">
+                    <div class="input-group" style="position: relative;">
+                      <input type="text" class="input" id="inputUserId" placeholder="Masukkan User ID (Server ID)"
+                        style="padding-left: 34px;">
+                      <span
+                        style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); font-size: 13px; pointer-events: none;">🔒</span>
                       <button type="button" class="input-btn" onclick="verifyUserId()">Cek ID</button>
+                    </div>
+                    <div class="privacy-note-input"
+                      style="font-size: 11px; color: var(--muted); margin: -4px 0 10px 4px; display: flex; align-items: center; gap: 4px;">
+                      <span>🛡️</span> <span id="textPrivacyNote">Privasi ID Akun terjamin aman</span>
                     </div>
                     <select class="input" id="selectGameServer">
                       <option value="Asia">Server: Asia / Indonesia</option>
@@ -157,7 +168,9 @@
               <div class="screen-view" id="screenGateway">
                 <div class="gateway-header">
                   <div class="gateway-title">🔒 Payment Gateway</div>
-                  <div class="gateway-badge" style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.25); color: var(--primary);">Secure</div>
+                  <div class="gateway-badge"
+                    style="background: rgba(56, 189, 248, 0.12); border-color: rgba(56, 189, 248, 0.25); color: var(--primary);">
+                    Secure</div>
                 </div>
                 <div class="gateway-body">
                   <div class="amount-box">
@@ -191,12 +204,14 @@
                         style="font-size: 11px; color: #4b5563; font-weight: 700; margin-top: 8px; display: inline-block;">SCAN
                         QRIS PIXELPAY</span>
                     </div>
-                    <p class="muted" id="gateQrisMsg" style="font-size: 12px; margin-bottom: 16px;">Silakan pindai kode QRIS dengan
+                    <p class="muted" id="gateQrisMsg" style="font-size: 12px; margin-bottom: 16px;">Silakan pindai kode
+                      QRIS dengan
                       aplikasi pembayaran Anda.</p>
                   </div>
                   <div id="vaView" class="instruction-box" style="display: none; width: 100%;">
                     <div class="va-box">
-                      <div id="gateVaTitle" style="font-size: 12px; color: var(--muted); font-weight: 600;">Nomor Virtual Account BCA
+                      <div id="gateVaTitle" style="font-size: 12px; color: var(--muted); font-weight: 600;">Nomor
+                        Virtual Account BCA
                       </div>
                       <div class="va-row">
                         <span class="va-number" id="vaNumText">88012 00000 00000</span>
@@ -224,7 +239,8 @@
                 <div class="success-screen-body">
                   <div class="success-checkmark">✓</div>
                   <h3 class="success-title" id="successTitleEl">Pembayaran Berhasil!</h3>
-                  <p class="success-desc" id="successDescEl">Top up Anda diproses &amp; saldo langsung terkirim otomatis.</p>
+                  <p class="success-desc" id="successDescEl">Top up Anda diproses &amp; saldo langsung terkirim
+                    otomatis.</p>
                   <div class="receipt-box">
                     <div class="receipt-row">
                       <span class="receipt-label" id="receiptGameLabel">Game</span>
@@ -270,29 +286,35 @@
         </div>
       </div>
     </section>
+
     <div class="section-sep"></div>
     <section id="problem">
       <div class="container">
         <div class="section-title reveal">
           <h2 id="problemTitle">Solusi Top-Up Game Terbaik Anda</h2>
-          <p class="muted" id="problemSub">Kami hadir untuk menyelesaikan masalah utama yang sering dialami oleh para gamer saat melakukan transaksi digital.</p>
+          <p class="muted" id="problemSub">Kami hadir untuk menyelesaikan masalah utama yang sering dialami oleh para
+            gamer saat melakukan transaksi digital.</p>
         </div>
         <div class="grid-2">
           <div class="card reveal d1">
             <div class="icon">⚠️</div>
             <h3 id="problem1Title">Masalah Klasik Top-Up</h3>
-            <p class="muted" id="problem1Desc">Proses transfer manual yang lambat, biaya admin tersembunyi yang mahal, serta maraknya diamond ilegal yang berisiko membuat akun game Anda terkena banned permanent.</p>
+            <p class="muted" id="problem1Desc">Proses transfer manual yang lambat, biaya admin tersembunyi yang mahal,
+              serta maraknya diamond ilegal yang berisiko membuat akun game Anda terkena banned permanent.</p>
           </div>
           <div class="card reveal d2">
             <div class="icon">⚡</div>
             <h3 id="problem2Title">Sistem Otomatis Instan</h3>
-            <p class="muted" id="problem2Desc">Platform kami terintegrasi langsung dengan server publisher game. Cukup isi ID, pilih nominal, bayar, dan saldo langsung masuk otomatis dalam hitungan detik.</p>
+            <p class="muted" id="problem2Desc">Platform kami terintegrasi langsung dengan server publisher game. Cukup
+              isi ID, pilih nominal, bayar, dan saldo langsung masuk otomatis dalam hitungan detik.</p>
           </div>
           <div class="card card-wide reveal d1">
             <div class="icon" style="flex-shrink:0;">🛡️</div>
             <div>
               <h3 id="problem3Title">Jaminan Keamanan 100% Legal</h3>
-              <p class="muted" id="problem3Desc">Semua produk digital kami bersumber dari distributor resmi (authorized distributor). Transaksi terjamin aman, legal, terpercaya, dan dilengkapi bukti invoice elektronik yang sah untuk setiap pembelian Anda.</p>
+              <p class="muted" id="problem3Desc">Semua produk digital kami bersumber dari distributor resmi (authorized
+                distributor). Transaksi terjamin aman, legal, terpercaya, dan dilengkapi bukti invoice elektronik yang
+                sah untuk setiap pembelian Anda.</p>
             </div>
           </div>
         </div>
@@ -370,7 +392,8 @@
               <span class="shimmer"></span>Daftar Promo
             </button>
           </form>
-          <p class="muted" id="ctaNote" style="font-size:13px;margin-top:16px">Kami menjaga privasi Anda. Tanpa spam, kirim hanya promo terbaik.</p>
+          <p class="muted" id="ctaNote" style="font-size:13px;margin-top:16px">Kami menjaga privasi Anda. Tanpa spam,
+            kirim hanya promo terbaik.</p>
         </div>
       </div>
     </section>
@@ -383,15 +406,20 @@
         </div>
         <details open class="reveal d1">
           <summary id="faqQ1">Apakah diamond / UC yang dijual legal dan aman?</summary>
-          <p class="muted" id="faqA1">Ya, 100% legal dan sangat aman. Semua produk digital kami diproses langsung dari distributor resmi (authorized distributor) masing-masing game. Akun Anda sepenuhnya aman dari risiko banned.</p>
+          <p class="muted" id="faqA1">Ya, 100% legal dan sangat aman. Semua produk digital kami diproses langsung dari
+            distributor resmi (authorized distributor) masing-masing game. Akun Anda sepenuhnya aman dari risiko banned.
+          </p>
         </details>
         <details class="reveal d2">
           <summary id="faqQ2">Berapa lama waktu proses saldo masuk?</summary>
-          <p class="muted" id="faqA2">Hanya butuh waktu beberapa detik. Sistem kami terotomatisasi secara real-time 24/7. Begitu pembayaran terverifikasi, item game langsung masuk ke akun Anda tanpa penundaan manual.</p>
+          <p class="muted" id="faqA2">Hanya butuh waktu beberapa detik. Sistem kami terotomatisasi secara real-time
+            24/7. Begitu pembayaran terverifikasi, item game langsung masuk ke akun Anda tanpa penundaan manual.</p>
         </details>
         <details class="reveal d3">
           <summary id="faqQ3">Bagaimana jika salah memasukkan User ID game?</summary>
-          <p class="muted" id="faqA3">Harap pastikan kembali data akun Anda sebelum checkout. Gunakan fitur tombol "Cek ID" yang kami sediakan untuk menampilkan nama/username pemilik ID guna memastikan kesesuaian sebelum membayar.</p>
+          <p class="muted" id="faqA3">Harap pastikan kembali data akun Anda sebelum checkout. Gunakan fitur tombol "Cek
+            ID" yang kami sediakan untuk menampilkan nama/username pemilik ID guna memastikan kesesuaian sebelum
+            membayar.</p>
         </details>
       </div>
     </section>
@@ -404,20 +432,18 @@
           <b>PixelPay TopUp</b><br>
           Layanan top-up game otomatis instan 24/7. Cepat, aman, dan tepercaya.
         </div>
-        <div class="identity" style="background: rgba(255,255,255,0.04); border-color: var(--line); color: var(--muted); padding: 12px 16px; border-radius: 16px; border: 1px solid var(--line);">
-          © 2026 PixelPay TopUp. Developed by Lamberth Paulinus Rumpaidus (23.11.5826)
-        </div>
-      </div>
-      <div class="partner-strip">
-        <span id="footerPaymentLabel" style="font-size: 12px; font-weight: 700; color: var(--muted);">Metode Pembayaran Partner</span>
-        <div class="partner-logos">
-          <span class="logo-tag">BCA</span>
-          <span class="logo-tag">MANDIRI</span>
-          <span class="logo-tag">QRIS</span>
-          <span class="logo-tag">GOPAY</span>
-          <span class="logo-tag">OVO</span>
-          <span class="logo-tag">DANA</span>
-          <span class="logo-tag">SHOPEEPAY</span>
+        <div class="footer-bottom-row">
+          <div class="identity">
+            © 2026 PixelPay TopUp. Developed by Lamberth Paulinus Rumpaidus (23.11.5826)
+          </div>
+          <div class="footer-media-partners">
+            <span class="footer-partners-label" id="lblFooterMediaPartners">Media Partners:</span>
+            <span class="logo-tag-partner gojek">Gojek</span>
+            <span class="logo-tag-partner grab">Grab</span>
+            <span class="logo-tag-partner gplay">Google Play</span>
+            <span class="logo-tag-partner shopee">Shopee</span>
+            <span class="logo-tag-partner midtrans">Midtrans</span>
+          </div>
         </div>
       </div>
     </div>
@@ -427,7 +453,8 @@
   <div class="mobile-drawer" id="mobileDrawer">
     <div class="drawer-header">
       <span class="logo" style="font-weight: 900; font-size: 20px;"><span class="logo-mark">⚡</span> PixelPay</span>
-      <span class="drawer-close" onclick="toggleMobileMenu()" style="cursor:pointer; font-size: 24px;" title="Tutup Menu">✕</span>
+      <span class="drawer-close" onclick="toggleMobileMenu()" style="cursor:pointer; font-size: 24px;"
+        title="Tutup Menu">✕</span>
     </div>
     <div class="drawer-links">
       <a href="#fitur" onclick="toggleMobileMenu()">Fitur</a>
@@ -436,7 +463,8 @@
       <a href="#faq" onclick="toggleMobileMenu()">FAQ</a>
     </div>
     <div style="margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--line);">
-      <div class="lang-switch" id="drawerLangSwitch" onclick="toggleLanguage()" title="Ubah Bahasa / Switch Language" style="margin-bottom: 16px; width: 100%; justify-content: center; gap: 12px;">
+      <div class="lang-switch" id="drawerLangSwitch" onclick="toggleLanguage()" title="Ubah Bahasa / Switch Language"
+        style="margin-bottom: 16px; width: 100%; justify-content: center; gap: 12px;">
         <span class="lang-label active" id="drawerLangID">ID</span>
         <span class="lang-label" id="drawerLangEN">EN</span>
       </div>
@@ -449,10 +477,222 @@
   </div>
   <div class="drawer-overlay" id="drawerOverlay" onclick="toggleMobileMenu()"></div>
 
-  <div class="whatsapp-float" id="waSupportBtn" title="Hubungi CS PixelPay via WhatsApp" aria-label="Hubungi WhatsApp Customer Support">
+  <div class="whatsapp-float" id="waSupportBtn" title="Hubungi CS PixelPay via WhatsApp"
+    aria-label="Hubungi WhatsApp Customer Support">
     💬
+  </div>
+
+  <!-- Payment Gateway Modal Overlay -->
+  <div class="modal-overlay" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content">
+      <div class="modal-close" onclick="closeCheckoutModal()" title="Tutup Halaman Pembayaran">✕</div>
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <div class="modal-logo">
+          <span class="logo-mark">⚡</span>
+          <span>PixelPay Secure Checkout</span>
+        </div>
+        <div class="secure-badge">
+          <span>🔒</span> SSL Secured 256-bit
+        </div>
+      </div>
+
+      <!-- Modal Body (Two Column Layout for desktop) -->
+      <div class="modal-grid" id="modalMainContent">
+        <!-- Left Side: Invoice Details -->
+        <div class="modal-info-col">
+          <h3 id="modalTitle">Detail Pembayaran</h3>
+          <p class="modal-sub" id="modalSub">Harap periksa kembali detail pesanan Anda sebelum melakukan pembayaran.</p>
+
+          <div class="order-summary-card">
+            <div class="summary-row">
+              <span class="summary-label" id="lblModalGame">Produk / Game</span>
+              <span class="summary-value" id="modalGameName">Mobile Legends</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label" id="lblModalTarget">Target ID</span>
+              <span class="summary-value" id="modalTargetId">12345678 (Server ID)</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label" id="lblModalItem">Item / Nominal</span>
+              <span class="summary-value" id="modalItemName">86 Diamonds</span>
+            </div>
+            <div class="summary-row">
+              <span class="summary-label" id="lblModalPay">Metode Pembayaran</span>
+              <span class="summary-value" id="modalPayMethod">QRIS (Gopay/OVO/Dana)</span>
+            </div>
+            <div class="summary-row" id="rowModalBenefit" style="display: none;">
+              <span class="summary-label" id="lblModalBenefit">Benefit Bundling</span>
+              <span class="summary-value" id="modalBenefitValue" style="color: var(--accent);">+ Bonus Shield
+                Card</span>
+            </div>
+            <div class="summary-row divider"></div>
+            <div class="summary-row total-row">
+              <span class="summary-label" id="lblModalTotal">Total Bayar</span>
+              <span class="summary-value price" id="modalTotalAmount">Rp 19.000</span>
+            </div>
+          </div>
+
+          <div class="privacy-badge-container">
+            <span class="shield-icon">🛡️</span>
+            <div>
+              <strong id="lblPrivacyShield">Jaminan Privasi Aman</strong>
+              <p id="lblPrivacyDesc">Kami tidak menyimpan password game atau menyebarkan data pribadi Anda ke pihak
+                ketiga. Privasi Anda terlindungi sepenuhnya.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Action Box / QRIS / VA -->
+        <div class="modal-action-col">
+          <div class="countdown-wrapper">
+            <div class="timer-label" id="lblModalTimerLabel">Sisa Waktu Pembayaran</div>
+            <div class="timer-countdown" id="modalTimer">10:00</div>
+          </div>
+
+          <!-- QRIS Section -->
+          <div id="modalQrisView" class="payment-view">
+            <div class="modal-qr-container">
+              <svg width="160" height="160" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                style="border: 6px solid #fff; border-radius: 12px; background: white; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <rect width="100" height="100" fill="white" />
+                <rect x="5" y="5" width="25" height="25" fill="black" />
+                <rect x="10" y="10" width="15" height="15" fill="white" />
+                <rect x="12" y="12" width="11" height="11" fill="black" />
+                <rect x="70" y="5" width="25" height="25" fill="black" />
+                <rect x="75" y="10" width="15" height="15" fill="white" />
+                <rect x="77" y="12" width="11" height="11" fill="black" />
+                <rect x="5" y="70" width="25" height="25" fill="black" />
+                <rect x="10" y="75" width="15" height="15" fill="white" />
+                <rect x="12" y="77" width="11" height="11" fill="black" />
+                <rect x="40" y="40" width="20" height="20" fill="black" />
+                <rect x="45" y="45" width="10" height="10" fill="white" />
+                <rect x="40" y="10" width="10" height="10" fill="black" />
+                <rect x="55" y="20" width="10" height="5" fill="black" />
+                <rect x="80" y="40" width="15" height="10" fill="black" />
+                <rect x="40" y="80" width="10" height="15" fill="black" />
+                <rect x="60" y="70" width="5" height="10" fill="black" />
+                <rect x="85" y="85" width="10" height="10" fill="black" />
+              </svg>
+            </div>
+            <p class="modal-instruction-text" id="lblModalQrisScan">Silakan pindai QRIS di atas untuk melakukan
+              pembayaran otomatis.</p>
+          </div>
+
+          <!-- Virtual Account Section -->
+          <div id="modalVaView" class="payment-view" style="display: none;">
+            <div class="modal-va-card">
+              <div class="va-header-row">
+                <span id="lblVaBankTitle">BCA VIRTUAL ACCOUNT</span>
+                <span class="bank-tag">BCA</span>
+              </div>
+              <div class="va-number-container">
+                <span class="va-number-text" id="modalVaNumber">88012 00000 00000</span>
+                <button type="button" class="btn-copy-modal" onclick="copyModalVA()" id="btnCopyModalVa">Salin</button>
+              </div>
+            </div>
+
+            <div class="modal-va-instruction">
+              <div class="inst-title" id="lblModalVaStep">Cara Pembayaran:</div>
+              <ol class="inst-list">
+                <li id="lblModalVaS1">Buka aplikasi m-BCA atau ATM BCA.</li>
+                <li id="lblModalVaS2">Pilih menu Transfer -> Virtual Account.</li>
+                <li id="lblModalVaS3">Masukkan nomor VA di atas.</li>
+                <li id="lblModalVaS4">Konfirmasi nama tagihan dan bayar.</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- File Upload Proof of Payment Component -->
+          <div class="proof-upload-container">
+            <label for="paymentProofInput" class="proof-upload-label" id="lblProofUpload">
+              <span class="upload-icon">📸</span>
+              <span class="upload-text" id="textUploadInstruction">Unggah Bukti Pembayaran (Mendukung JPG/PNG)</span>
+              <input type="file" id="paymentProofInput" accept="image/*" style="display: none;"
+                onchange="handleProofUpload(event)">
+            </label>
+            <div id="proofPreviewContainer"
+              style="display: none; align-items: center; gap: 12px; margin-top: 10px; padding: 8px 12px; background: rgba(255, 255, 255, 0.03); border: 1px solid var(--line); border-radius: 12px; width: 100%;">
+              <img id="proofPreviewImg" src="" alt="Proof Preview"
+                style="width: 44px; height: 44px; object-fit: cover; border-radius: 8px; border: 1px solid var(--line);">
+              <div style="display: flex; flex-direction: column; overflow: hidden; max-width: 180px;">
+                <span id="proofFileName"
+                  style="font-size: 12px; font-weight: 700; color: var(--text); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">bukti_transfer.png</span>
+                <span id="proofFileSize" style="font-size: 10px; color: var(--muted);">1.2 MB</span>
+              </div>
+              <button type="button" class="btn-remove-proof" onclick="removeProofFile()"
+                style="margin-left: auto; background: none; border: none; color: #ef4444; font-size: 14px; cursor: pointer; padding: 4px;">✕</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn btn-primary modal-action-btn" id="btnModalPaid"
+            onclick="confirmModalPayment()">
+            <span class="shimmer"></span>
+            <span id="lblModalPaid">Saya Sudah Bayar</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Success State Inside Modal (Initially Hidden) -->
+      <div class="modal-success-state" id="modalSuccessState" style="display: none;">
+        <div class="success-checkmark">✓</div>
+        <h3 class="success-title" id="lblModalSuccessTitle">Pembayaran Berhasil!</h3>
+        <p class="success-desc" id="lblModalSuccessDesc">Top up Anda diproses & saldo langsung terkirim otomatis.</p>
+
+        <div class="receipt-box-modal">
+          <div class="receipt-grid">
+            <div class="receipt-col">
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessGame">Game</span>
+                <span class="r-value" id="receiptModalGame">Mobile Legends</span>
+              </div>
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessUser">ID Akun (Target)</span>
+                <span class="r-value" id="receiptModalUserId">1234****</span>
+              </div>
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessItem">Item Paket</span>
+                <span class="r-value" id="receiptModalItem">86 Diamonds</span>
+              </div>
+              <div class="receipt-field" id="rowModalSuccessBenefit" style="display: none;">
+                <span class="r-label" id="lblModalSuccessBenefit">Benefit Bundling</span>
+                <span class="r-value" id="receiptModalBenefit" style="color: var(--accent);">+ Bonus Shield Card</span>
+              </div>
+            </div>
+            <div class="receipt-col">
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessPay">Metode Pembayaran</span>
+                <span class="r-value" id="receiptModalPay">QRIS</span>
+              </div>
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessTotal">Total Harga</span>
+                <span class="r-value price" id="receiptModalTotal">Rp 19.000</span>
+              </div>
+              <div class="receipt-field">
+                <span class="r-label" id="lblModalSuccessTxId">ID Transaksi</span>
+                <span class="r-value code" id="receiptModalTxId">PX-83H2G7</span>
+              </div>
+            </div>
+          </div>
+          <div class="receipt-footer-msg" id="lblModalSuccessFooter">
+            🛡️ Bukti transaksi aman dan dilindungi enkripsi privasi SSL.
+          </div>
+        </div>
+
+        <div class="success-actions">
+          <a href="#" class="btn btn-success-wa" id="btnWhatsAppRedirect" onclick="redirectToWhatsApp(); return false;">
+            💬 Kirim ke WhatsApp CS (Proses Instan)
+          </a>
+          <button type="button" class="btn btn-ghost" onclick="closeCheckoutModal()" id="btnModalCloseSuccess">
+            Kembali ke Beranda
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="js/app.js" defer></script>
 </body>
+
 </html>

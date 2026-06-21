@@ -9,7 +9,11 @@ const GAME_DB = {
       { id: 'ml_257', name: '257 💎', price: 57000, label: 'Rp 57.000' },
       { id: 'ml_344', name: '344 💎', price: 76000, label: 'Rp 76.000' },
       { id: 'ml_429', name: '429 💎', price: 95000, label: 'Rp 95.000' },
-      { id: 'ml_706', name: '706 💎', price: 155000, label: 'Rp 155.000' }
+      { id: 'ml_706', name: '706 💎', price: 155000, label: 'Rp 155.000' },
+      
+      { id: 'ml_bundle_epic', name: 'Epic Pass + 86 💎', price: 29000, label: 'Rp 29.000' },
+      { id: 'ml_bundle_savage', name: 'Savage Pass + 257 💎', price: 69000, label: 'Rp 69.000' },
+      { id: 'ml_bundle_sultan', name: 'Sultan Supreme (706 💎 + Skin)', price: 165000, label: 'Rp 165.000' }
     ],
     idPlaceholder: 'Masukkan User ID (Server ID)',
     idRegex: /^\d{8,10}\(\d{4}\)$/,
@@ -25,7 +29,11 @@ const GAME_DB = {
       { id: 'ff_355', name: '355 💎', price: 50000, label: 'Rp 50.000' },
       { id: 'ff_720', name: '720 💎', price: 100000, label: 'Rp 100.000' },
       { id: 'ff_1440', name: '1440 💎', price: 190000, label: 'Rp 190.000' },
-      { id: 'ff_2180', name: '2180 💎', price: 280000, label: 'Rp 280.000' }
+      { id: 'ff_2180', name: '2180 💎', price: 280000, label: 'Rp 280.000' },
+      
+      { id: 'ff_bundle_weekly', name: 'Weekly Pass + 255 💎', price: 70000, label: 'Rp 70.000' },
+      { id: 'ff_bundle_sultan', name: 'Sultan Pass + 720 💎', price: 120000, label: 'Rp 120.000' },
+      { id: 'ff_bundle_pro', name: 'Survivor Pass + 1440 💎', price: 210000, label: 'Rp 210.000' }
     ],
     idPlaceholder: 'Masukkan Player ID',
     idRegex: /^\d{8,12}$/,
@@ -41,7 +49,11 @@ const GAME_DB = {
       { id: 'pubg_660', name: '660 UC', price: 150000, label: 'Rp 150.000' },
       { id: 'pubg_1800', name: '1800 UC', price: 375000, label: 'Rp 375.000' },
       { id: 'pubg_3850', name: '3850 UC', price: 750000, label: 'Rp 750.000' },
-      { id: 'pubg_8100', name: '8100 UC', price: 1500000, label: 'Rp 1.500.000' }
+      { id: 'pubg_8100', name: '8100 UC', price: 1500000, label: 'Rp 1.500.000' },
+      
+      { id: 'pubg_bundle_chicken', name: 'Weekly Pass + 60 UC', price: 25000, label: 'Rp 25.000' },
+      { id: 'pubg_bundle_champion', name: 'Royale Pass + 660 UC', price: 175000, label: 'Rp 175.000' },
+      { id: 'pubg_bundle_airdrop', name: 'Airdrop Pass + 1800 UC', price: 395000, label: 'Rp 395.000' }
     ],
     idPlaceholder: 'Masukkan Character ID',
     idRegex: /^\d{7,11}$/,
@@ -57,7 +69,11 @@ const GAME_DB = {
       { id: 'gi_980', name: '980 Genesis', price: 249000, label: 'Rp 249.000' },
       { id: 'gi_1980', name: '1980 Genesis', price: 479000, label: 'Rp 479.000' },
       { id: 'gi_3280', name: '3280 Genesis', price: 799000, label: 'Rp 799.000' },
-      { id: 'gi_6480', name: '6480 Genesis', price: 1599000, label: 'Rp 1.599.000' }
+      { id: 'gi_6480', name: '6480 Genesis', price: 1599000, label: 'Rp 1.599.000' },
+      
+      { id: 'gi_bundle_welkin', name: 'Welkin Moon + 60 Genesis', price: 79000, label: 'Rp 79.000' },
+      { id: 'gi_bundle_hunt', name: 'Battle Pass + 980 Genesis', price: 249000, label: 'Rp 249.000' },
+      { id: 'gi_bundle_sovereign', name: 'Gnostic Chorus + 3280 Genesis', price: 799000, label: 'Rp 799.000' }
     ],
     idPlaceholder: 'Masukkan UID (Pilih Server)',
     idRegex: /^\d{9}$/,
@@ -79,6 +95,8 @@ let currentVerificationUsername = '';
 let isUserVerified = false;
 let checkoutTimer = null;
 let simulatedTxCount = 10000;
+let selectedBundleBenefit = '';
+let uploadedProofFile = null;
 
 const TRANSLATIONS = {
   id: {
@@ -178,7 +196,6 @@ const TRANSLATIONS = {
     faqQ3: 'Bagaimana jika salah memasukkan User ID game?',
     faqA3: 'Harap pastikan kembali data akun Anda sebelum checkout. Gunakan fitur tombol "Cek ID" yang kami sediakan untuk menampilkan nama/username pemilik ID guna memastikan kesesuaian sebelum membayar.',
     footerDesc: 'Layanan top-up game otomatis instan 24/7. Cepat, aman, dan tepercaya.',
-    footerPaymentLabel: 'Metode Pembayaran Partner',
     toastPaySelect: '💳 Pembayaran via',
     toastItemSelect: 'dipilih —',
     toastIdEmpty: '⚠️ Masukkan User ID terlebih dahulu!',
@@ -195,6 +212,41 @@ const TRANSLATIONS = {
     drawerTopUp: 'Top Up Sekarang',
     langSwitchToEn: '🌐 Language switched to English',
     langSwitchToId: '🌐 Bahasa diubah ke Indonesia',
+    textPrivacyNote: 'Privasi ID Akun terjamin aman',
+    partnerSubLabel: 'PLATFORM TERPERCAYA & AMAN',
+    partnerMainTitle: 'Partner Media & Pembayaran Resmi',
+    modalTitle: 'Detail Pembayaran',
+    modalSub: 'Harap periksa kembali detail pesanan Anda sebelum melakukan pembayaran.',
+    lblModalGame: 'Produk / Game',
+    lblModalTarget: 'Target ID',
+    lblModalItem: 'Item / Nominal',
+    lblModalPay: 'Metode Pembayaran',
+    lblModalTotal: 'Total Bayar',
+    lblPrivacyShield: 'Jaminan Privasi Aman',
+    lblPrivacyDesc: 'Kami tidak menyimpan password game atau menyebarkan data pribadi Anda ke pihak ketiga. Privasi Anda terlindungi sepenuhnya.',
+    lblModalTimerLabel: 'Sisa Waktu Pembayaran',
+    lblModalQrisScan: 'Silakan pindai QRIS di atas untuk melakukan pembayaran otomatis.',
+    lblModalVaStep: 'Cara Pembayaran:',
+    lblModalVaS1: 'Buka aplikasi m-BCA atau ATM BCA.',
+    lblModalVaS2: 'Pilih menu Transfer -> Virtual Account.',
+    lblModalVaS3: 'Masukkan nomor VA di atas.',
+    lblModalVaS4: 'Konfirmasi nama tagihan dan bayar.',
+    lblModalPaid: 'Saya Sudah Bayar',
+    lblModalSuccessTitle: 'Pembayaran Berhasil!',
+    lblModalSuccessDesc: 'Top up Anda diproses & saldo langsung terkirim otomatis.',
+    lblModalSuccessGame: 'Game',
+    lblModalSuccessUser: 'ID Akun (Target)',
+    lblModalSuccessItem: 'Item Paket',
+    lblModalSuccessPay: 'Metode Pembayaran',
+    lblModalSuccessTotal: 'Total Harga',
+    lblModalSuccessTxId: 'ID Transaksi',
+    lblModalSuccessFooter: '🛡️ Bukti transaksi aman dan dilindungi enkripsi privasi SSL.',
+    btnWhatsAppRedirect: '💬 Kirim ke WhatsApp CS (Proses Instan)',
+    btnModalCloseSuccess: 'Kembali ke Beranda',
+    lblModalBenefit: 'Benefit Bundling',
+    lblFooterMediaPartners: 'Media Partner:',
+    lblProofUpload: 'Unggah Bukti Pembayaran',
+    textUploadInstruction: 'Unggah Bukti Pembayaran (Mendukung JPG/PNG)',
   },
   en: {
     navFitur: 'Features',
@@ -293,7 +345,6 @@ const TRANSLATIONS = {
     faqQ3: 'What if I enter the wrong game User ID?',
     faqA3: 'Please double-check your account details before checking out. Use the "Check ID" button to verify the account owner name before paying to avoid errors.',
     footerDesc: '24/7 automatic instant game top-up service. Fast, secure, and highly trusted.',
-    footerPaymentLabel: 'Payment Partner Methods',
     toastPaySelect: '💳 Payment via',
     toastItemSelect: 'selected —',
     toastIdEmpty: '⚠️ Please enter your User ID first!',
@@ -310,6 +361,41 @@ const TRANSLATIONS = {
     drawerTopUp: 'Top Up Now',
     langSwitchToEn: '🌐 Language switched to English',
     langSwitchToId: '🌐 Bahasa diubah ke Indonesia',
+    textPrivacyNote: 'Account ID privacy guaranteed secure',
+    partnerSubLabel: 'TRUSTED & SECURE PLATFORM',
+    partnerMainTitle: 'Official Media & Payment Partners',
+    modalTitle: 'Payment Details',
+    modalSub: 'Please double-check your order details before making payment.',
+    lblModalGame: 'Product / Game',
+    lblModalTarget: 'Account Target ID',
+    lblModalItem: 'Item / Amount',
+    lblModalPay: 'Payment Method',
+    lblModalTotal: 'Total Payment',
+    lblPrivacyShield: 'Privacy Guaranteed Secure',
+    lblPrivacyDesc: 'We do not store game passwords or share your personal data with third parties. Your privacy is fully protected.',
+    lblModalTimerLabel: 'Remaining Payment Time',
+    lblModalQrisScan: 'Please scan the QRIS above to make an automated payment.',
+    lblModalVaStep: 'How to Pay:',
+    lblModalVaS1: 'Open m-BCA app or BCA ATM.',
+    lblModalVaS2: 'Select Transfer -> Virtual Account.',
+    lblModalVaS3: 'Enter the VA number above.',
+    lblModalVaS4: 'Confirm the billing details and pay.',
+    lblModalPaid: 'I Have Paid',
+    lblModalSuccessTitle: 'Payment Successful!',
+    lblModalSuccessDesc: 'Your top-up is processed & balance is sent automatically.',
+    lblModalSuccessGame: 'Game',
+    lblModalSuccessUser: 'Account ID (Target)',
+    lblModalSuccessItem: 'Package Item',
+    lblModalSuccessPay: 'Payment Method',
+    lblModalSuccessTotal: 'Total Price',
+    lblModalSuccessTxId: 'Transaction ID',
+    lblModalSuccessFooter: '🛡️ Secure transaction receipt protected by SSL privacy encryption.',
+    btnWhatsAppRedirect: '💬 Send to CS WhatsApp (Instant Process)',
+    btnModalCloseSuccess: 'Back to Home',
+    lblModalBenefit: 'Bundling Benefit',
+    lblFooterMediaPartners: 'Media Partner:',
+    lblProofUpload: 'Upload Payment Proof',
+    textUploadInstruction: 'Upload Payment Proof (Supports JPG/PNG)',
   }
 };
 
@@ -318,17 +404,17 @@ const BUNDLE_PACKAGES = {
     id: {
       title: 'Promo Mobile Legends',
       items: [
-        { name: 'Epic Comeback', detail: '86 💎 + Bonus Shield Card. Naik rank tanpa takut kalah bintang!', tag: 'Hemat', price: 19000, itemId: 'ml_86' },
-        { name: 'Savage Push', detail: '257 💎 + Loyalty Poin. Paling pas kejar rank Mythic akhir pekan.', tag: 'Populer', price: 57000, itemId: 'ml_257' },
-        { name: 'Sultan Supreme', detail: '706 💎 + Prioritas Fast Pass. Unlock skin incaran instan.', tag: 'Sultan', price: 155000, itemId: 'ml_706' }
+        { name: 'Epic Pass + 86 💎', detail: 'Epic Pass + 86 💎 + Bonus Shield Card. Naik rank tanpa takut kalah bintang!', tag: 'Hemat', price: 29000, itemId: 'ml_bundle_epic' },
+        { name: 'Savage Pass + 257 💎', detail: 'Savage Pass + 257 💎 + Loyalty Poin. Paling pas kejar rank Mythic akhir pekan.', tag: 'Populer', price: 69000, itemId: 'ml_bundle_savage' },
+        { name: 'Sultan Supreme (706 💎 + Skin)', detail: 'Sultan Supreme (706 💎 + Skin) + Prioritas Fast Pass. Unlock skin incaran instan.', tag: 'Sultan', price: 165000, itemId: 'ml_bundle_sultan' }
       ]
     },
     en: {
       title: 'Mobile Legends Promo',
       items: [
-        { name: 'Epic Comeback', detail: '86 💎 + Shield Card Bonus. Climb ranks without star-loss fear!', tag: 'Budget', price: 19000, itemId: 'ml_86' },
-        { name: 'Savage Push', detail: '257 💎 + Loyalty Points. Best deal for weekend Mythic push.', tag: 'Popular', price: 57000, itemId: 'ml_257' },
-        { name: 'Sultan Supreme', detail: '706 💎 + Priority Fast Pass. Unlock target skins instantly.', tag: 'Sultan', price: 155000, itemId: 'ml_706' }
+        { name: 'Epic Pass + 86 💎', detail: 'Epic Pass + 86 💎 + Shield Card Bonus. Climb ranks without star-loss fear!', tag: 'Budget', price: 29000, itemId: 'ml_bundle_epic' },
+        { name: 'Savage Pass + 257 💎', detail: 'Savage Pass + 257 💎 + Loyalty Points. Best deal for weekend Mythic push.', tag: 'Popular', price: 69000, itemId: 'ml_bundle_savage' },
+        { name: 'Sultan Supreme (706 💎 + Skin)', detail: 'Sultan Supreme (706 💎 + Skin) + Priority Fast Pass. Unlock target skins instantly.', tag: 'Sultan', price: 165000, itemId: 'ml_bundle_sultan' }
       ]
     }
   },
@@ -336,17 +422,17 @@ const BUNDLE_PACKAGES = {
     id: {
       title: 'Promo Free Fire',
       items: [
-        { name: 'Auto Booyah', detail: '70 💎 + Tactic Pass. Bertahan hidup dan kuasai pertempuran.', tag: 'Hemat', price: 10000, itemId: 'ff_70' },
-        { name: 'Sultan Squad', detail: '720 💎 + Bonus Poin Loyalitas. Paling modis mendarat di Bermuda.', tag: 'Populer', price: 100000, itemId: 'ff_720' },
-        { name: 'Survivor Pro', detail: '1440 💎 + Gold Pass Bundle. Kuasai ranked match level tinggi.', tag: 'Sultan', price: 190000, itemId: 'ff_1440' }
+        { name: 'Weekly Pass + 255 💎', detail: 'Weekly Pass + 255 💎 + Weekly Pass Active. Paling hemat untuk kumpulkan diamond harian!', tag: 'Hemat', price: 70000, itemId: 'ff_bundle_weekly' },
+        { name: 'Sultan Pass + 720 💎', detail: 'Sultan Pass + 720 💎 + Bonus Poin Loyalitas. Paling modis mendarat di Bermuda.', tag: 'Populer', price: 120000, itemId: 'ff_bundle_sultan' },
+        { name: 'Survivor Pass + 1440 💎', detail: 'Survivor Pass + 1440 💎 + Gold Pass Bundle. Kuasai ranked match level tinggi.', tag: 'Sultan', price: 210000, itemId: 'ff_bundle_pro' }
       ]
     },
     en: {
       title: 'Free Fire Promo',
       items: [
-        { name: 'Auto Booyah', detail: '70 💎 + Tactic Pass. Survive and master the battlefield.', tag: 'Budget', price: 10000, itemId: 'ff_70' },
-        { name: 'Sultan Squad', detail: '720 💎 + Loyalty Point Bonus. Drop down Bermuda with elite style.', tag: 'Popular', price: 100000, itemId: 'ff_720' },
-        { name: 'Survivor Pro', detail: '1440 💎 + Gold Pass Bundle. Dominate high-level ranked match.', tag: 'Sultan', price: 190000, itemId: 'ff_1440' }
+        { name: 'Weekly Pass + 255 💎', detail: 'Weekly Pass + 255 💎 + Weekly Pass Active. Save big to collect daily diamonds!', tag: 'Budget', price: 70000, itemId: 'ff_bundle_weekly' },
+        { name: 'Sultan Pass + 720 💎', detail: 'Sultan Pass + 720 💎 + Loyalty Point Bonus. Drop down Bermuda with elite style.', tag: 'Popular', price: 120000, itemId: 'ff_bundle_sultan' },
+        { name: 'Survivor Pass + 1440 💎', detail: 'Survivor Pass + 1440 💎 + Gold Pass Bundle. Dominate high-level ranked match.', tag: 'Sultan', price: 210000, itemId: 'ff_bundle_pro' }
       ]
     }
   },
@@ -354,17 +440,17 @@ const BUNDLE_PACKAGES = {
     id: {
       title: 'Promo PUBG Mobile',
       items: [
-        { name: 'Chicken Dinner', detail: '60 UC + Crate Voucher. Amunisi awal pertempuran taktis.', tag: 'Hemat', price: 15000, itemId: 'pubg_60' },
-        { name: 'Royale Champion', detail: '660 UC + Upgrade Royale Pass. Dapatkan skin eksklusif musim ini.', tag: 'Populer', price: 150000, itemId: 'pubg_660' },
-        { name: 'Sultan Airdrop', detail: '1800 UC + Fast Process. Unlock crate militer incaran Anda.', tag: 'Sultan', price: 375000, itemId: 'pubg_1800' }
+        { name: 'Weekly Pass + 60 UC', detail: 'Weekly Pass + 60 UC + Crate Voucher. Amunisi awal pertempuran taktis.', tag: 'Hemat', price: 25000, itemId: 'pubg_bundle_chicken' },
+        { name: 'Royale Pass + 660 UC', detail: 'Royale Pass + 660 UC + Upgrade Royale Pass. Dapatkan skin eksklusif musim ini.', tag: 'Populer', price: 175000, itemId: 'pubg_bundle_champion' },
+        { name: 'Airdrop Pass + 1800 UC', detail: 'Airdrop Pass + 1800 UC + Fast Process. Unlock crate militer incaran Anda.', tag: 'Sultan', price: 395000, itemId: 'pubg_bundle_airdrop' }
       ]
     },
     en: {
       title: 'PUBG Mobile Promo',
       items: [
-        { name: 'Chicken Dinner', detail: '60 UC + Crate Voucher. Starter pack for tactical battlefields.', tag: 'Budget', price: 15000, itemId: 'pubg_60' },
-        { name: 'Royale Champion', detail: '660 UC + Upgrade Royale Pass. Get this season exclusive skins.', tag: 'Popular', price: 150000, itemId: 'pubg_660' },
-        { name: 'Sultan Airdrop', detail: '1800 UC + Fast Process. Instantly unlock military drops.', tag: 'Sultan', price: 375000, itemId: 'pubg_1800' }
+        { name: 'Weekly Pass + 60 UC', detail: 'Weekly Pass + 60 UC + Crate Voucher. Starter pack for tactical battlefields.', tag: 'Budget', price: 25000, itemId: 'pubg_bundle_chicken' },
+        { name: 'Royale Pass + 660 UC', detail: 'Royale Pass + 660 UC + Upgrade Royale Pass. Get this season exclusive skins.', tag: 'Popular', price: 175000, itemId: 'pubg_bundle_champion' },
+        { name: 'Airdrop Pass + 1800 UC', detail: 'Airdrop Pass + 1800 UC + Fast Process. Instantly unlock military drops.', tag: 'Sultan', price: 395000, itemId: 'pubg_bundle_airdrop' }
       ]
     }
   },
@@ -372,17 +458,17 @@ const BUNDLE_PACKAGES = {
     id: {
       title: 'Promo Genshin Impact',
       items: [
-        { name: 'Welkin Blessing', detail: '60 Gen + Bonus Petualang. Paling pas untuk traveler pemula.', tag: 'Hemat', price: 16000, itemId: 'gi_60' },
-        { name: 'Primogem Hunt', detail: '980 Gen + Daily Blessing Card. Persiapan gacha hero bintang 5.', tag: 'Populer', price: 249000, itemId: 'gi_980' },
-        { name: 'Archon Sovereign', detail: '3280 Gen + Upgrade Material. Upgrade konstelasi maksimal.', tag: 'Sultan', price: 799000, itemId: 'gi_3280' }
+        { name: 'Welkin Moon + 60 Genesis', detail: 'Welkin Moon + 60 Genesis + Bonus Petualang. Paling pas untuk traveler pemula.', tag: 'Hemat', price: 79000, itemId: 'gi_bundle_welkin' },
+        { name: 'Battle Pass + 980 Genesis', detail: 'Battle Pass + 980 Genesis + Daily Blessing Card. Persiapan gacha hero bintang 5.', tag: 'Populer', price: 249000, itemId: 'gi_bundle_hunt' },
+        { name: 'Gnostic Chorus + 3280 Genesis', detail: 'Gnostic Chorus + 3280 Genesis + Upgrade Material. Upgrade konstelasi maksimal.', tag: 'Sultan', price: 799000, itemId: 'gi_bundle_sovereign' }
       ]
     },
     en: {
       title: 'Genshin Impact Promo',
       items: [
-        { name: 'Welkin Blessing', detail: '60 Gen + Adventurer Bonus. Best choice for beginner travelers.', tag: 'Budget', price: 16000, itemId: 'gi_60' },
-        { name: 'Primogem Hunt', detail: '980 Gen + Daily Blessing Card. Get ready for 5-star banners.', tag: 'Popular', price: 249000, itemId: 'gi_980' },
-        { name: 'Archon Sovereign', detail: '3280 Gen + Upgrade Material. Max out your constellation.', tag: 'Sultan', price: 799000, itemId: 'gi_3280' }
+        { name: 'Welkin Moon + 60 Genesis', detail: 'Welkin Moon + 60 Genesis + Adventurer Bonus. Best choice for beginner travelers.', tag: 'Budget', price: 79000, itemId: 'gi_bundle_welkin' },
+        { name: 'Battle Pass + 980 Genesis', detail: 'Battle Pass + 980 Genesis + Daily Blessing Card. Get ready for 5-star banners.', tag: 'Popular', price: 249000, itemId: 'gi_bundle_hunt' },
+        { name: 'Gnostic Chorus + 3280 Genesis', detail: 'Gnostic Chorus + 3280 Genesis + Upgrade Material. Max out your constellation.', tag: 'Sultan', price: 799000, itemId: 'gi_bundle_sovereign' }
       ]
     }
   }
@@ -616,8 +702,101 @@ function translatePage() {
 
   const footerDesc = document.getElementById('footerDesc');
   if (footerDesc) footerDesc.innerHTML = `<b>PixelPay TopUp</b><br>${dict.footerDesc}`;
-  const footerPaymentLabelEl = document.getElementById('footerPaymentLabel');
-  if (footerPaymentLabelEl) footerPaymentLabelEl.textContent = dict.footerPaymentLabel;
+
+  const textPrivacyNote = document.getElementById('textPrivacyNote');
+  if (textPrivacyNote) textPrivacyNote.textContent = dict.textPrivacyNote;
+
+  const partnerSubLabel = document.getElementById('partnerSubLabel');
+  if (partnerSubLabel) partnerSubLabel.textContent = dict.partnerSubLabel;
+  const partnerMainTitle = document.getElementById('partnerMainTitle');
+  if (partnerMainTitle) partnerMainTitle.textContent = dict.partnerMainTitle;
+
+  const modalTitle = document.getElementById('modalTitle');
+  if (modalTitle) modalTitle.textContent = dict.modalTitle;
+  const modalSub = document.getElementById('modalSub');
+  if (modalSub) modalSub.textContent = dict.modalSub;
+
+  const lblModalGame = document.getElementById('lblModalGame');
+  if (lblModalGame) lblModalGame.textContent = dict.lblModalGame;
+  const lblModalTarget = document.getElementById('lblModalTarget');
+  if (lblModalTarget) lblModalTarget.textContent = dict.lblModalTarget;
+  const lblModalItem = document.getElementById('lblModalItem');
+  if (lblModalItem) lblModalItem.textContent = dict.lblModalItem;
+  const lblModalPay = document.getElementById('lblModalPay');
+  if (lblModalPay) lblModalPay.textContent = dict.lblModalPay;
+  const lblModalTotal = document.getElementById('lblModalTotal');
+  if (lblModalTotal) lblModalTotal.textContent = dict.lblModalTotal;
+
+  const lblPrivacyShield = document.getElementById('lblPrivacyShield');
+  if (lblPrivacyShield) lblPrivacyShield.textContent = dict.lblPrivacyShield;
+  const lblPrivacyDesc = document.getElementById('lblPrivacyDesc');
+  if (lblPrivacyDesc) lblPrivacyDesc.textContent = dict.lblPrivacyDesc;
+
+  const lblModalTimerLabel = document.getElementById('lblModalTimerLabel');
+  if (lblModalTimerLabel) lblModalTimerLabel.textContent = dict.lblModalTimerLabel;
+  const lblModalQrisScan = document.getElementById('lblModalQrisScan');
+  if (lblModalQrisScan) lblModalQrisScan.textContent = dict.lblModalQrisScan;
+
+  const lblVaBankTitle = document.getElementById('lblVaBankTitle');
+  if (lblVaBankTitle) lblVaBankTitle.textContent = dict.lblVaBankTitle;
+  const lblModalVaStep = document.getElementById('lblModalVaStep');
+  if (lblModalVaStep) lblModalVaStep.textContent = dict.lblModalVaStep;
+  const lblModalVaS1 = document.getElementById('lblModalVaS1');
+  if (lblModalVaS1) lblModalVaS1.textContent = dict.lblModalVaS1;
+  const lblModalVaS2 = document.getElementById('lblModalVaS2');
+  if (lblModalVaS2) lblModalVaS2.textContent = dict.lblModalVaS2;
+  const lblModalVaS3 = document.getElementById('lblModalVaS3');
+  if (lblModalVaS3) lblModalVaS3.textContent = dict.lblModalVaS3;
+  const lblModalVaS4 = document.getElementById('lblModalVaS4');
+  if (lblModalVaS4) lblModalVaS4.textContent = dict.lblModalVaS4;
+
+  const lblModalPaid = document.getElementById('lblModalPaid');
+  if (lblModalPaid) {
+    const isProcessing = document.getElementById('btnModalPaid').classList.contains('processing');
+    if (!isProcessing) {
+      document.getElementById('btnModalPaid').innerHTML = `<span class="shimmer"></span><span id="lblModalPaid">${dict.lblModalPaid}</span>`;
+    }
+  }
+
+  const lblModalSuccessTitle = document.getElementById('lblModalSuccessTitle');
+  if (lblModalSuccessTitle) lblModalSuccessTitle.textContent = dict.lblModalSuccessTitle;
+  const lblModalSuccessDesc = document.getElementById('lblModalSuccessDesc');
+  if (lblModalSuccessDesc) lblModalSuccessDesc.textContent = dict.lblModalSuccessDesc;
+
+  const lblModalSuccessGame = document.getElementById('lblModalSuccessGame');
+  if (lblModalSuccessGame) lblModalSuccessGame.textContent = dict.lblModalSuccessGame;
+  const lblModalSuccessUser = document.getElementById('lblModalSuccessUser');
+  if (lblModalSuccessUser) lblModalSuccessUser.textContent = dict.lblModalSuccessUser;
+  const lblModalSuccessItem = document.getElementById('lblModalSuccessItem');
+  if (lblModalSuccessItem) lblModalSuccessItem.textContent = dict.lblModalSuccessItem;
+  const lblModalSuccessPay = document.getElementById('lblModalSuccessPay');
+  if (lblModalSuccessPay) lblModalSuccessPay.textContent = dict.lblModalSuccessPay;
+  const lblModalSuccessTotal = document.getElementById('lblModalSuccessTotal');
+  if (lblModalSuccessTotal) lblModalSuccessTotal.textContent = dict.lblModalSuccessTotal;
+  const lblModalSuccessTxId = document.getElementById('lblModalSuccessTxId');
+  if (lblModalSuccessTxId) lblModalSuccessTxId.textContent = dict.lblModalSuccessTxId;
+  const lblModalSuccessFooter = document.getElementById('lblModalSuccessFooter');
+  if (lblModalSuccessFooter) lblModalSuccessFooter.textContent = dict.lblModalSuccessFooter;
+
+  const btnWhatsAppRedirect = document.getElementById('btnWhatsAppRedirect');
+  if (btnWhatsAppRedirect) btnWhatsAppRedirect.textContent = dict.btnWhatsAppRedirect;
+  const btnModalCloseSuccess = document.getElementById('btnModalCloseSuccess');
+  if (btnModalCloseSuccess) btnModalCloseSuccess.textContent = dict.btnModalCloseSuccess;
+
+  const lblModalBenefit = document.getElementById('lblModalBenefit');
+  if (lblModalBenefit) lblModalBenefit.textContent = dict.lblModalBenefit;
+  const lblModalSuccessBenefit = document.getElementById('lblModalSuccessBenefit');
+  if (lblModalSuccessBenefit) lblModalSuccessBenefit.textContent = dict.lblModalBenefit;
+
+  const lblFooterMediaPartners = document.getElementById('lblFooterMediaPartners');
+  if (lblFooterMediaPartners) lblFooterMediaPartners.textContent = dict.lblFooterMediaPartners;
+
+  const textUploadInstruction = document.getElementById('textUploadInstruction');
+  if (textUploadInstruction) {
+    if (!uploadedProofFile) {
+      textUploadInstruction.textContent = dict.textUploadInstruction;
+    }
+  }
 }
 
 window.renderPackages = function() {
@@ -658,16 +837,29 @@ window.selectPackageBundle = function(gameKey, itemId) {
   const db = GAME_DB[gameKey];
   const targetItem = db.items.find(i => i.id === itemId);
   if (targetItem) {
-    const cards = document.querySelectorAll('.diamond');
-    cards.forEach(card => {
-      const strongText = card.querySelector('strong').textContent.trim();
-      if (strongText.includes(targetItem.name.split(' ')[0])) {
-        selectedDiamondObj = targetItem;
-        document.querySelectorAll('.diamond').forEach(d => d.classList.remove('selected'));
-        card.classList.add('selected');
-        updateTotalPayment();
+    selectedDiamondObj = targetItem;
+    
+    document.querySelectorAll('.diamond').forEach(d => d.classList.remove('selected'));
+    updateTotalPayment();
+
+    
+    const lang = currentLanguage;
+    const bundles = BUNDLE_PACKAGES[gameKey][lang].items;
+    const matchedBundle = bundles.find(b => b.itemId === itemId);
+    if (matchedBundle) {
+      const plusIndex = matchedBundle.detail.indexOf('+');
+      const dotIndex = matchedBundle.detail.indexOf('.');
+      if (plusIndex !== -1) {
+        const end = dotIndex !== -1 ? dotIndex : matchedBundle.detail.length;
+        selectedBundleBenefit = matchedBundle.detail.substring(plusIndex, end).trim();
+      } else {
+        selectedBundleBenefit = matchedBundle.name;
       }
-    });
+    } else {
+      selectedBundleBenefit = '';
+    }
+  } else {
+    selectedBundleBenefit = '';
   }
   
   const demoSection = document.getElementById('demo');
@@ -849,7 +1041,8 @@ window.switchGame = function (gameKey) {
 function renderDiamonds(items) {
   if (!diamondGrid) return;
   diamondGrid.innerHTML = '';
-  items.forEach(item => {
+  const standardItems = items.filter(item => !item.id.includes('_bundle_'));
+  standardItems.forEach(item => {
     const card = document.createElement('div');
     card.className = 'diamond';
     card.innerHTML = `<strong>${item.name}</strong><span class="muted">${formatRupiah(item.price)}</span>`;
@@ -862,9 +1055,23 @@ function selectDiamondCard(el, item) {
   document.querySelectorAll('.diamond').forEach(d => d.classList.remove('selected'));
   el.classList.add('selected');
   selectedDiamondObj = item;
+  selectedBundleBenefit = ''; 
   const dict = TRANSLATIONS[currentLanguage];
   showToast(`💎 ${item.name} ${dict.toastItemSelect} ${formatRupiah(item.price)}`);
   updateTotalPayment();
+
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'select_item', {
+      item_list_id: 'diamond_packages',
+      items: [{
+        item_id: item.id,
+        item_name: item.name,
+        price: item.price,
+        quantity: 1
+      }]
+    });
+  }
 }
 
 window.selectPayment = function(methodKey) {
@@ -925,6 +1132,26 @@ function hashCode(str) {
     hash = str.charCodeAt(i) + ((hash << 5) - hash);
   }
   return hash;
+}
+
+function maskUserId(userId) {
+  if (!userId) return '';
+  const match = userId.match(/^([^\(]+)\((.*)\)$/);
+  if (match) {
+    const idPart = match[1];
+    const zonePart = match[2];
+    return maskPart(idPart) + '(' + zonePart + ')';
+  }
+  return maskPart(userId);
+}
+
+function maskPart(str) {
+  if (str.length <= 4) return str.replace(/./g, '*');
+  const mid = Math.floor(str.length / 2);
+  const start = str.substring(0, Math.max(2, mid - 2));
+  const end = str.substring(str.length - Math.max(1, str.length - mid - 2));
+  const maskLen = str.length - start.length - end.length;
+  return start + '*'.repeat(maskLen) + end;
 }
 
 function updateTotalPayment() {
@@ -994,6 +1221,9 @@ function openPaymentGateway() {
 
   if (gateTotalAmount) gateTotalAmount.textContent = formatRupiah(total);
 
+  
+  const vaGeneratedNumber = '4561517848';
+
   if (selectedPaymentMethod === 'qris' || selectedPaymentMethod === 'dana') {
     if (qrisView) qrisView.style.display = 'block';
     if (vaView) vaView.style.display = 'none';
@@ -1001,8 +1231,58 @@ function openPaymentGateway() {
     if (qrisView) qrisView.style.display = 'none';
     if (vaView) vaView.style.display = 'block';
     if (vaNumText) {
-      vaNumText.textContent = '88012 ' + Math.floor(10000 + Math.random() * 90000) + ' ' + Math.floor(10000 + Math.random() * 90000);
+      vaNumText.textContent = vaGeneratedNumber;
     }
+  }
+
+  
+  const db = GAME_DB[currentActiveGame];
+  const targetIdRaw = inputUserId.value.trim();
+  
+  document.getElementById('modalGameName').textContent = db.name;
+  document.getElementById('modalTargetId').textContent = `${targetIdRaw} (${currentVerificationUsername || 'Verified'})`;
+  document.getElementById('modalItemName').textContent = selectedDiamondObj.name;
+  document.getElementById('modalPayMethod').textContent = PAYMENT_METHODS[selectedPaymentMethod].name;
+  document.getElementById('modalTotalAmount').textContent = formatRupiah(total);
+
+  
+  const benefitRow = document.getElementById('rowModalBenefit');
+  const benefitVal = document.getElementById('modalBenefitValue');
+  if (selectedBundleBenefit) {
+    benefitRow.style.display = 'flex';
+    benefitVal.textContent = selectedBundleBenefit;
+  } else {
+    benefitRow.style.display = 'none';
+  }
+
+  if (selectedPaymentMethod === 'qris' || selectedPaymentMethod === 'dana') {
+    document.getElementById('modalQrisView').style.display = 'flex';
+    document.getElementById('modalVaView').style.display = 'none';
+  } else {
+    document.getElementById('modalQrisView').style.display = 'none';
+    document.getElementById('modalVaView').style.display = 'block';
+    document.getElementById('modalVaNumber').textContent = vaGeneratedNumber;
+  }
+
+  
+  removeProofFile();
+
+  
+  openCheckoutModal();
+
+  
+  if (typeof gtag === 'function') {
+    gtag('event', 'begin_checkout', {
+      currency: 'IDR',
+      value: total,
+      items: [{
+        item_id: selectedDiamondObj.id,
+        item_name: selectedDiamondObj.name,
+        item_category: db.name,
+        price: selectedDiamondObj.price,
+        quantity: 1
+      }]
+    });
   }
 
   startCheckoutTimer(600); 
@@ -1018,9 +1298,14 @@ function startCheckoutTimer(duration) {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
     if (gateTimer) gateTimer.textContent = `${dict.gateTimer} ${minutes}:${seconds}`;
+    
+    const modalTimerEl = document.getElementById('modalTimer');
+    if (modalTimerEl) modalTimerEl.textContent = `${minutes}:${seconds}`;
+
     if (--timer < 0) {
       clearInterval(checkoutTimer);
       showToast(TRANSLATIONS[currentLanguage].gateTimerExpired);
+      closeCheckoutModal();
       resetToOrderScreen();
     }
   };
@@ -1082,8 +1367,10 @@ if (btnGatewaySuccess) {
           const now = new Date();
           const formatTime = now.toLocaleDateString(locale) + ' ' + now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
 
+          const rawUserId = inputUserId.value.trim();
+          const maskedId = maskUserId(rawUserId);
           if (succGame) succGame.textContent = db.name;
-          if (succUser) succUser.textContent = `${inputUserId.value.trim()} (${currentVerificationUsername})`;
+          if (succUser) succUser.textContent = `${maskedId} (${currentVerificationUsername})`;
           if (succItem) succItem.textContent = selectedDiamondObj.name;
           if (succPay) succPay.textContent = PAYMENT_METHODS[selectedPaymentMethod].name;
           if (succTotal) succTotal.textContent = formatRupiah(total);
@@ -1123,9 +1410,11 @@ function resetToOrderScreen() {
   }
 
   selectedDiamondObj = null;
+  selectedBundleBenefit = '';
   document.querySelectorAll('.diamond').forEach(d => d.classList.remove('selected'));
   selectPayment('qris');
   updateTotalPayment();
+  removeProofFile();
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -1170,3 +1459,248 @@ document.addEventListener('DOMContentLoaded', () => {
   }`;
   document.head.appendChild(style);
 });
+
+let lastTransactionData = null;
+
+window.openCheckoutModal = function() {
+  const modal = document.getElementById('checkoutModal');
+  if (modal) {
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.closeCheckoutModal = function() {
+  const modal = document.getElementById('checkoutModal');
+  if (modal) {
+    modal.classList.remove('open');
+    if (!document.getElementById('mobileDrawer').classList.contains('open')) {
+      document.body.style.overflow = '';
+    }
+  }
+  
+  const modalMainContent = document.getElementById('modalMainContent');
+  const modalSuccessState = document.getElementById('modalSuccessState');
+  if (modalMainContent) modalMainContent.style.display = 'grid';
+  if (modalSuccessState) modalSuccessState.style.display = 'none';
+  
+  const btnModalPaid = document.getElementById('btnModalPaid');
+  if (btnModalPaid) {
+    btnModalPaid.classList.remove('processing');
+    btnModalPaid.style.background = '';
+    btnModalPaid.style.color = '';
+    btnModalPaid.innerHTML = `<span class="shimmer"></span><span id="lblModalPaid">${TRANSLATIONS[currentLanguage].lblModalPaid}</span>`;
+  }
+  removeProofFile();
+};
+
+window.confirmModalPayment = function() {
+  const btn = document.getElementById('btnModalPaid');
+  if (!btn || btn.classList.contains('processing')) return;
+  btn.classList.add('processing');
+  
+  const dict = TRANSLATIONS[currentLanguage];
+  const originalHTML = `<span class="shimmer"></span><span id="lblModalPaid">${dict.lblModalPaid}</span>`;
+  
+  if (typeof gtag === 'function') {
+    const basePrice = selectedDiamondObj.price;
+    const adminFee = PAYMENT_METHODS[selectedPaymentMethod].fee;
+    const total = basePrice + adminFee;
+    gtag('event', 'add_payment_info', {
+      payment_type: selectedPaymentMethod,
+      value: total,
+      currency: 'IDR'
+    });
+  }
+  
+  btn.innerHTML = `<span class="spinner-icon" style="display:inline-block; margin-right: 8px;">⏳</span> ${dict.gateConnecting.replace('⏳ ', '')}`;
+  showToast(dict.gateProcessing1);
+  
+  setTimeout(() => {
+    btn.innerHTML = `<span class="spinner-icon" style="display:inline-block; margin-right: 8px;">⚡</span> ${dict.gateVerifying.replace('⚡ ', '')}`;
+    showToast(dict.gateProcessing2);
+    
+    setTimeout(() => {
+      btn.innerHTML = dict.gateSuccess;
+      btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+      btn.style.color = '#fff';
+      showToast(dict.gateProcessing3);
+      
+      setTimeout(() => {
+        clearInterval(checkoutTimer);
+        btn.classList.remove('processing');
+        btn.innerHTML = originalHTML;
+        btn.style.background = '';
+        btn.style.color = '';
+        
+        const modalMainContent = document.getElementById('modalMainContent');
+        const modalSuccessState = document.getElementById('modalSuccessState');
+        if (modalMainContent) modalMainContent.style.display = 'none';
+        if (modalSuccessState) modalSuccessState.style.display = 'flex';
+        
+        const db = GAME_DB[currentActiveGame];
+        const adminFee = PAYMENT_METHODS[selectedPaymentMethod].fee;
+        const total = selectedDiamondObj.price + adminFee;
+        const locale = currentLanguage === 'id' ? 'id-ID' : 'en-US';
+        const now = new Date();
+        const formatTime = now.toLocaleDateString(locale) + ' ' + now.toLocaleTimeString(locale, { hour: '2-digit', minute: '2-digit' });
+        const txId = 'PX' + Math.random().toString(36).substring(2, 9).toUpperCase();
+        const sn = 'SN-' + Math.floor(100000000 + Math.random() * 900000000);
+        
+        const rawUserId = inputUserId.value.trim();
+        const maskedId = maskUserId(rawUserId);
+        
+        document.getElementById('receiptModalGame').textContent = db.name;
+        document.getElementById('receiptModalUserId').textContent = `${maskedId} (${currentVerificationUsername})`;
+        document.getElementById('receiptModalItem').textContent = selectedDiamondObj.name;
+        document.getElementById('receiptModalPay').textContent = PAYMENT_METHODS[selectedPaymentMethod].name;
+        document.getElementById('receiptModalTotal').textContent = formatRupiah(total);
+        document.getElementById('receiptModalTxId').textContent = `${txId} (SN: ${sn})`;
+        
+        
+        const succBenefitRow = document.getElementById('rowModalSuccessBenefit');
+        const succBenefitVal = document.getElementById('receiptModalBenefit');
+        if (selectedBundleBenefit) {
+          succBenefitRow.style.display = 'flex';
+          succBenefitVal.textContent = selectedBundleBenefit;
+        } else {
+          succBenefitRow.style.display = 'none';
+        }
+
+        simulatedTxCount += 1;
+        if (counterEl) {
+          counterEl.textContent = simulatedTxCount.toLocaleString('id-ID') + '+';
+        }
+        if (screenGateway) screenGateway.classList.remove('active');
+        if (screenSuccess) screenSuccess.classList.add('active');
+        if (succGame) succGame.textContent = db.name;
+        if (succUser) succUser.textContent = `${maskedId} (${currentVerificationUsername})`;
+        if (succItem) succItem.textContent = selectedDiamondObj.name;
+        if (succPay) succPay.textContent = PAYMENT_METHODS[selectedPaymentMethod].name;
+        if (succTotal) succTotal.textContent = formatRupiah(total);
+        if (succTxId) succTxId.textContent = txId;
+        if (succSN) succSN.textContent = sn;
+        if (succDate) succDate.textContent = formatTime;
+        
+        lastTransactionData = {
+          game: db.name,
+          userId: maskedId,
+          verifiedName: currentVerificationUsername,
+          itemName: selectedDiamondObj.name,
+          paymentMethod: PAYMENT_METHODS[selectedPaymentMethod].name,
+          total: formatRupiah(total),
+          txId: txId,
+          sn: sn,
+          time: formatTime,
+          benefit: selectedBundleBenefit,
+          proofFileName: uploadedProofFile ? uploadedProofFile.name : null
+        };
+        
+        if (typeof gtag === 'function') {
+          gtag('event', 'purchase', {
+            transaction_id: txId,
+            value: total,
+            currency: 'IDR',
+            items: [{
+              item_id: selectedDiamondObj.id,
+              item_name: selectedDiamondObj.name,
+              item_category: db.name,
+              price: selectedDiamondObj.price,
+              quantity: 1
+            }]
+          });
+        }
+        
+        setTimeout(() => {
+          redirectToWhatsApp();
+        }, 800);
+        
+      }, 1000);
+    }, 1500);
+  }, 1500);
+};
+
+window.copyModalVA = function() {
+  const vaNumEl = document.getElementById('modalVaNumber');
+  if (!vaNumEl) return;
+  const dict = TRANSLATIONS[currentLanguage];
+  const rawNum = vaNumEl.textContent.replace(/\s/g, '');
+  navigator.clipboard.writeText(rawNum).then(() => {
+    showToast(dict.toastCopyVa);
+  }).catch(() => {
+    showToast(dict.toastCopyFail);
+  });
+};
+
+window.redirectToWhatsApp = function() {
+  if (!lastTransactionData) return;
+  const data = lastTransactionData;
+  
+  const benefitText = data.benefit ? `\n- Benefit Bundling: ${data.benefit}` : '';
+  const proofText = data.proofFileName ? `\n- Bukti Pembayaran: [Terlampir - ${data.proofFileName}] (Silakan lampirkan gambar bukti transfer Anda ke chat ini)` : '\n- Bukti Pembayaran: (Silakan lampirkan gambar bukti transfer Anda ke chat ini)';
+
+  const message = `Halo PixelPay, saya sudah melakukan pembayaran!
+
+Detail Pesanan:
+- Game: ${data.game}
+- ID Akun: ${data.userId} (${data.verifiedName})
+- Item: ${data.itemName}${benefitText}
+- Metode Pembayaran: ${data.paymentMethod}
+- Total Bayar: ${data.total}
+- ID Transaksi: ${data.txId}
+- No. Serial (SN): ${data.sn}
+- Waktu: ${data.time}${proofText}
+
+Mohon segera diproses. Terima kasih!`;
+
+  const waUrl = `https://wa.me/6281247248519?text=${encodeURIComponent(message)}`;
+  window.open(waUrl, '_blank');
+};
+
+window.handleProofUpload = function(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  
+  uploadedProofFile = file;
+  
+  const labelText = document.getElementById('textUploadInstruction');
+  if (labelText) labelText.textContent = TRANSLATIONS[currentLanguage].lblProofUpload + ': ' + file.name;
+  
+  const previewContainer = document.getElementById('proofPreviewContainer');
+  const previewImg = document.getElementById('proofPreviewImg');
+  const fileNameEl = document.getElementById('proofFileName');
+  const fileSizeEl = document.getElementById('proofFileSize');
+  
+  if (previewContainer && previewImg && fileNameEl && fileSizeEl) {
+    fileNameEl.textContent = file.name;
+    fileSizeEl.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+    
+    
+    const objectUrl = URL.createObjectURL(file);
+    previewImg.src = objectUrl;
+    previewContainer.style.display = 'flex';
+  }
+};
+
+window.removeProofFile = function() {
+  uploadedProofFile = null;
+  
+  const fileInput = document.getElementById('paymentProofInput');
+  if (fileInput) fileInput.value = '';
+  
+  const labelText = document.getElementById('textUploadInstruction');
+  if (labelText) labelText.textContent = TRANSLATIONS[currentLanguage].textUploadInstruction;
+  
+  const previewContainer = document.getElementById('proofPreviewContainer');
+  const previewImg = document.getElementById('proofPreviewImg');
+  if (previewContainer) {
+    previewContainer.style.display = 'none';
+  }
+  if (previewImg) {
+    
+    if (previewImg.src.startsWith('blob:')) {
+      URL.revokeObjectURL(previewImg.src);
+    }
+    previewImg.src = '';
+  }
+};
