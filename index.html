@@ -4,14 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PixelPay TopUp - Top Up Game Cepat &amp; Aman</title>
+  <title>PixelPay TopUp — Digital Game Store</title><meta name="theme-color" content="#071827"><link rel="icon" type="image/svg+xml" href="app-logo.svg">
   <meta name="description"
     content="Landing page PixelPay TopUp, layanan top-up game berbasis IT yang cepat, aman, dan cocok untuk gamer Indonesia." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/ui-upgrades.css">
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-166GB4JJDP"></script>
   <script>
@@ -33,7 +33,7 @@
 :root{--bg:#070f1b;--panel:#101d2d;--card:#102338;--primary:#0abca8;--secondary:#32d8e8;--line:rgba(89,220,211,.2)}body{background:radial-gradient(ellipse at 15% 3%,#0c3339 0%,transparent 43%),radial-gradient(ellipse at 90% 45%,#102242 0%,transparent 50%),var(--bg)}.nav{background:rgba(6,18,30,.88)!important;backdrop-filter:blur(20px);border-bottom:1px solid var(--lr-line)}.logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.02em}.lr-nav-monogram{width:66px;height:38px;object-fit:contain;filter:drop-shadow(0 0 12px #04cba34a)}.hero h1,.section-title h2{letter-spacing:-.045em}.card,.step,details,.cta-band{border:1px solid var(--lr-line)!important;box-shadow:0 18px 52px #0002;backdrop-filter:blur(6px)}.btn{transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.identity{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.identity .lr-monogram{width:95px}.identity small{color:#a7c2ca}footer{border-top:1px solid var(--lr-line)}@media(max-width:600px){.lr-nav-monogram{width:43px;height:30px}.logo{font-size:14px}.identity{justify-content:center;text-align:center}} </style></head>
 
 <body>
-  <div class="bg-orbs" aria-hidden="true"><span></span></div>
+  <div class="bg-orbs" aria-hidden="true"><span></span></div><div id="pp-scroll-progress" class="pp-scroll-progress" aria-hidden="true"></div><div class="pp-ui-status" id="pp-ui-status" role="status" aria-live="polite"></div>
   <div id="toast" role="alert" aria-live="polite"></div>
 
   <nav class="nav" id="mainNav">
@@ -45,7 +45,7 @@
       </div>
 
       <a class="logo" href="#top" aria-label="PixelPay TopUp">
-        <img class="lr-nav-monogram" src="brand-lr.svg" alt="" width="66" height="36">
+        <img class="pp-app-logo" src="app-logo.svg" alt="Logo aplikasi PixelPay" width="40" height="40">
         PixelPay TopUp
       </a>
       <div class="nav-links">
@@ -413,6 +413,7 @@
           <h2 id="faqTitle">FAQ (Pertanyaan Umum)</h2>
           <p class="muted" id="faqSub">Semua yang perlu Anda ketahui tentang layanan PixelPay TopUp.</p>
         </div>
+        <div class="pp-faq-tools"><input id="pp-faq-search" type="search" aria-label="Cari pertanyaan umum" placeholder="Cari pertanyaan… (tekan /)"><button type="button" id="pp-faq-expand">Buka Semua</button><button type="button" id="pp-faq-collapse">Tutup Semua</button></div><div id="pp-faq-empty" class="pp-faq-empty" hidden>Tidak ada pertanyaan yang cocok.</div>
         <details open class="reveal d1">
           <summary id="faqQ1">Apakah diamond / UC yang dijual legal dan aman?</summary>
           <p class="muted" id="faqA1">Ya, 100% legal dan sangat aman. Semua produk digital kami diproses langsung dari
@@ -434,6 +435,7 @@
     </section>
   </main>
 
+  <div class="container pp-extras" aria-label="Informasi keamanan dan pilihan aksesibilitas"><div><strong>PixelPay Security Corner</strong><p>Jangan membagikan OTP, PIN, kata sandi, atau kode verifikasi kepada siapa pun. Pastikan detail transaksi sebelum melanjutkan pembayaran.</p></div><div class="pp-extra-buttons"><button type="button" id="pp-contrast" aria-pressed="false">Kontras tinggi</button><button type="button" id="pp-motion" aria-pressed="false">Animasi minim</button><button type="button" id="pp-share">Bagikan</button></div></div>
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -699,7 +701,7 @@
     </div>
   </div>
 
-  <script src="js/app.js" defer></script>
+  <button class="pp-back-top" id="pp-back-top" type="button" hidden aria-label="Kembali ke atas">↑ Ke atas</button><script src="js/app.js" defer></script><script src="js/ui-upgrades.js" defer></script>
 </body>
 
 </html>
