@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/ui-upgrades.css">
-  <!-- Google tag (gtag.js) -->
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-166GB4JJDP"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -22,7 +22,7 @@
     gtag('config', 'G-166GB4JJDP');
   </script>
 <style>
-/* L/R FUTURE UI 2026 — non-destructive visual refresh */
+
 :root{--lr-aqua:#04dfbb;--lr-ice:#e8faff;--lr-line:rgba(107,239,215,.26)}
 .lr-monogram{display:block;object-fit:contain;width:clamp(100px,12vw,150px);height:auto;filter:drop-shadow(0 0 17px rgba(0,225,182,.27))}
 .lr-brand-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--lr-line);border-radius:16px;background:linear-gradient(125deg,rgba(13,37,48,.86),rgba(5,16,29,.6));padding:8px 14px;box-shadow:inset 0 1px rgba(255,255,255,.06),0 14px 34px rgba(0,0,0,.16);transition:transform .2s,border-color .2s}
@@ -491,12 +491,12 @@
     💬
   </div>
 
-  <!-- Payment Gateway Modal Overlay -->
+  
   <div class="modal-overlay" id="checkoutModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal-content">
       <div class="modal-close" onclick="closeCheckoutModal()" title="Tutup Halaman Pembayaran">✕</div>
 
-      <!-- Modal Header -->
+      
       <div class="modal-header">
         <div class="modal-logo">
           <span class="logo-mark">⚡</span>
@@ -507,9 +507,9 @@
         </div>
       </div>
 
-      <!-- Modal Body (Two Column Layout for desktop) -->
+      
       <div class="modal-grid" id="modalMainContent">
-        <!-- Left Side: Invoice Details -->
+        
         <div class="modal-info-col">
           <h3 id="modalTitle">Detail Pembayaran</h3>
           <p class="modal-sub" id="modalSub">Harap periksa kembali detail pesanan Anda sebelum melakukan pembayaran.</p>
@@ -553,14 +553,14 @@
           </div>
         </div>
 
-        <!-- Right Side: Action Box / QRIS / VA -->
+        
         <div class="modal-action-col">
           <div class="countdown-wrapper">
             <div class="timer-label" id="lblModalTimerLabel">Sisa Waktu Pembayaran</div>
             <div class="timer-countdown" id="modalTimer">10:00</div>
           </div>
 
-          <!-- QRIS Section -->
+          
           <div id="modalQrisView" class="payment-view">
             <div class="modal-qr-container">
               <svg width="160" height="160" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -589,7 +589,7 @@
               pembayaran otomatis.</p>
           </div>
 
-          <!-- Virtual Account Section -->
+          
           <div id="modalVaView" class="payment-view" style="display: none;">
             <div class="modal-va-card">
               <div class="va-header-row">
@@ -613,7 +613,7 @@
             </div>
           </div>
 
-          <!-- File Upload Proof of Payment Component -->
+          
           <div class="proof-upload-container">
             <label for="paymentProofInput" class="proof-upload-label" id="lblProofUpload">
               <span class="upload-icon">📸</span>
@@ -643,7 +643,7 @@
         </div>
       </div>
 
-      <!-- Success State Inside Modal (Initially Hidden) -->
+      
       <div class="modal-success-state" id="modalSuccessState" style="display: none;">
         <div class="success-checkmark">✓</div>
         <h3 class="success-title" id="lblModalSuccessTitle">Pembayaran Berhasil!</h3>
