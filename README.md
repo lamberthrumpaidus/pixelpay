@@ -1,31 +1,26 @@
 <div align="center">
-  <img src="./app-logo.svg" alt="Logo PixelPay TopUp" width="90" />
+  <img src="./app-logo.svg" alt="Logo PixelPay TopUp" width="88" />
   <h1>PixelPay TopUp</h1>
-  <p>Konsep landing page untuk layanan top-up game digital.</p>
-  <p><a href="./index.html">Lihat halaman utama</a> · <a href="https://github.com/lamberthrumpaidus/lamberthrumpaidus">Profil L/R</a></p>
+  <p>Rancangan landing page layanan top-up game.</p>
+  <p><a href="./index.html">Halaman utama</a> · <a href="https://github.com/lamberthrumpaidus/lamberthrumpaidus">Profil utama</a></p>
 </div>
 
 ---
 
-### Tentang proyek
+## Tentang proyek
 
-PixelPay adalah rancangan website bisnis digital yang memperkenalkan konsep layanan top-up game. Fokusnya pada penyajian informasi produk, komunikasi manfaat, dan alur pemesanan yang mudah dipahami.
+PixelPay merupakan prototipe website bisnis digital yang memperkenalkan konsep layanan top-up game. Halaman dirancang untuk menyajikan informasi paket, keunggulan layanan, proses pemesanan, dan pertanyaan yang sering diajukan secara terstruktur.
 
-**Yang ditampilkan**
-- Informasi layanan, paket, dan cara kerja.
-- Tampilan responsif, FAQ, serta interaksi halaman.
-- Simulasi formulir dan alur pemesanan.
+**Fitur antarmuka:** navigasi responsif, informasi paket, formulir, FAQ, serta pilihan tampilan dan bahasa.
 
-> **Catatan:** Repository ini merupakan konsep/landing page, bukan jaminan layanan pembayaran atau top-up aktif. Jangan memasukkan informasi pembayaran sensitif tanpa memastikan penyedia layanan yang sah.
+**Teknologi:** HTML, CSS, dan JavaScript.
 
-**Teknologi:** HTML · CSS · JavaScript
+Proyek ini merupakan demonstrasi antarmuka, bukan layanan transaksi yang telah diverifikasi. Fitur pembayaran tidak boleh dianggap aktif tanpa integrasi dan pengujian sistem terkait.
 
-### Menjalankan
-
-Jalankan website dari server lokal:
+## Menjalankan secara lokal
 
 ```bash
 python -m http.server 8000
 ```
 
-Kemudian buka `http://localhost:8000`.
+Kemudian akses `http://localhost:8000`.
