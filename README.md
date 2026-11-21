@@ -29,7 +29,3 @@ python -m http.server 8000
 ```
 
 Kemudian buka `http://localhost:8000`.
-
----
-
-<p align="center"><sub>Designed by <a href="https://github.com/lamberthrumpaidus/lamberthrumpaidus">Lamberth Rumpaidus</a></sub></p>
