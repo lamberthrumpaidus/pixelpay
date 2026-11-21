@@ -1,3 +1,4 @@
+/* ALL Create by LamberthRumpaidus */
 const GAME_DB = {
   ml: {
     name: 'Mobile Legends',

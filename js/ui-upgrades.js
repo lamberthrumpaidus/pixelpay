@@ -1,3 +1,4 @@
+/* ALL Create by LamberthRumpaidus */
 (() => {
   const key = "pixelpay-ui-v3";
   const root = document.documentElement;
