@@ -35,7 +35,31 @@
 :where(button,a,input,select,textarea):focus-visible{outline:2px solid var(--lr-aqua);outline-offset:3px}
 @media(prefers-reduced-motion:reduce){.lr-brand-link{transition:none!important}}
 
-:root{--bg:#070f1b;--panel:#101d2d;--card:#102338;--primary:#0abca8;--secondary:#32d8e8;--line:rgba(89,220,211,.2)}body{background:radial-gradient(ellipse at 15% 3%,#0c3339 0%,transparent 43%),radial-gradient(ellipse at 90% 45%,#102242 0%,transparent 50%),var(--bg)}.nav{background:rgba(6,18,30,.88)!important;backdrop-filter:blur(20px);border-bottom:1px solid var(--lr-line)}.logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.02em}.lr-nav-monogram{width:66px;height:38px;object-fit:contain;filter:drop-shadow(0 0 12px #04cba34a)}.hero h1,.section-title h2{letter-spacing:-.045em}.card,.step,details,.cta-band{border:1px solid var(--lr-line)!important;box-shadow:0 18px 52px #0002;backdrop-filter:blur(6px)}.btn{transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.identity{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.identity .lr-monogram{width:95px}.identity small{color:#a7c2ca}footer{border-top:1px solid var(--lr-line)}@media(max-width:600px){.lr-nav-monogram{width:43px;height:30px}.logo{font-size:14px}.identity{justify-content:center;text-align:center}} </style></head>
+:root{--bg:#070f1b;--panel:#101d2d;--card:#102338;--primary:#0abca8;--secondary:#32d8e8;--line:rgba(89,220,211,.2)}body{background:radial-gradient(ellipse at 15% 3%,#0c3339 0%,transparent 43%),radial-gradient(ellipse at 90% 45%,#102242 0%,transparent 50%),var(--bg)}.nav{background:rgba(6,18,30,.88)!important;backdrop-filter:blur(20px);border-bottom:1px solid var(--lr-line)}.logo{display:inline-flex;align-items:center;gap:8px;font-weight:800;letter-spacing:-.02em}.lr-nav-monogram{width:66px;height:38px;object-fit:contain;filter:drop-shadow(0 0 12px #04cba34a)}.hero h1,.section-title h2{letter-spacing:-.045em}.card,.step,details,.cta-band{border:1px solid var(--lr-line)!important;box-shadow:0 18px 52px #0002;backdrop-filter:blur(6px)}.btn{transition:transform .18s,filter .18s}.btn:hover{transform:translateY(-2px);filter:brightness(1.1)}.identity{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.identity .lr-monogram{width:95px}.identity small{color:#a7c2ca}footer{border-top:1px solid var(--lr-line)}@media(max-width:600px){.lr-nav-monogram{width:43px;height:30px}.logo{font-size:14px}.identity{justify-content:center;text-align:center}} </style>
+<!-- ALL Create by LamberthRumpaidus | Inspection deterrent (not a security boundary) -->
+<script id="lr-inspection-guard">
+(()=>{'use strict';
+  if(window.__lrInspectionGuard)return;
+  window.__lrInspectionGuard=true;
+  // Preserve keyboard navigation, text editing, copying, and game controls.
+  const interactive='a,button,input,textarea,select,option,[contenteditable]:not([contenteditable="false"]),canvas,video,audio,pre,code,[role="application"],[role="log"],[role="button"]';
+  document.addEventListener('contextmenu',event=>{
+    if(event.target instanceof Element&&event.target.closest(interactive))return;
+    if(event.cancelable)event.preventDefault();
+  });
+  document.addEventListener('keydown',event=>{
+    if(event.isComposing)return;
+    const key=String(event.key||'').toLowerCase();
+    const command=event.ctrlKey||event.metaKey;
+    const developerShortcut=key==='f12'||
+      (command&&event.shiftKey&&['i','j','c','k'].includes(key))||
+      (event.metaKey&&event.altKey&&['i','j','c','u'].includes(key))||
+      (command&&!event.shiftKey&&!event.altKey&&key==='u');
+    if(developerShortcut&&event.cancelable)event.preventDefault();
+  },true);
+})();
+</script>
+</head>
 
 <body>
   <div class="bg-orbs" aria-hidden="true"><span></span></div><div id="pp-scroll-progress" class="pp-scroll-progress" aria-hidden="true"></div><div class="pp-ui-status" id="pp-ui-status" role="status" aria-live="polite"></div>
